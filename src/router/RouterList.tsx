@@ -7,6 +7,9 @@
 
 import Test from "@/components/Test";
 import CalendarView from "@/pages/CalendarView";
+import DiaryView from "@/pages/DiaryView";
+import DiaryEmotionView from "@/pages/DiaryEmotionView";
+import DiaryWriteView from "@/pages/DiaryWriteView";
 
 // 메인 route list
 const mainList : Array<any> = [ 
@@ -19,7 +22,12 @@ const authList : Array<any> = [
 
 
 // 캘린더 route list
-const calendarList : Array<any> = [{path : '/calendar', element :<CalendarView />}];
+const calendarList : Array<any> = [
+    {path : '/calendar', element :<CalendarView />},
+    {path : '/calendar/diary', element :<DiaryView />},
+    {path : '/calendar/diary/emotion', element :<DiaryEmotionView />},
+    {path : '/calendar/diary/write', element :<DiaryWriteView />}
+];
 
 
 // 카드 route list
