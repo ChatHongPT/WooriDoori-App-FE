@@ -170,7 +170,7 @@ const UserInfoView: React.FC = () => {
 
 
       {/* 네비게이션 바 */}
-      <div className="mt-auto">
+      <div className={`mt-auto transition-opacity duration-200 ${(isLogoutModalOpen || isWithdrawModalOpen) ? 'opacity-50 pointer-events-none' : ''}`}>
         <BottomNav />
       </div>
 
