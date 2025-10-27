@@ -80,7 +80,7 @@ const UserInfoView: React.FC = () => {
       </div>
 
       {/* 사용자 정보 입력 폼 */}
-      <div className="space-y-20">
+      <div className="space-y-12">
         {/* 아이디 */}
         <div>
           <label className="block text-[1.3rem] font-medium text-gray-800 mb-2">
@@ -148,11 +148,11 @@ const UserInfoView: React.FC = () => {
       </div>
 
       {/* 저장 버튼 */}
-      <div className="mt-8">
+      <div className="mt-12">
         <DefaultButton
           text="저장"
           onClick={() => console.log('저장')}
-          className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
+          className="w-full max-w-none bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
         />
       </div>
 
