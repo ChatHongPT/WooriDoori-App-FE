@@ -7,6 +7,9 @@
 
 import Test from "@/components/Test";
 import CalendarView from "@/pages/CalendarView";
+import CardManagementView from "@/pages/CardManagementView";
+import AddCardView from "@/pages/AddCardView";
+import CardAddCompleteView from "@/pages/CardAddCompleteView";
 
 // 메인 route list
 const mainList : Array<any> = [ 
@@ -23,7 +26,11 @@ const calendarList : Array<any> = [{path : '/calendar', element :<CalendarView /
 
 
 // 카드 route list
-const cardList : Array<any> = [];
+const cardList : Array<any> = [
+    {path : '/card', element :<CardManagementView />},
+    {path : '/card/cards', element :<AddCardView />},
+    {path : '/card/cards/complete', element :<CardAddCompleteView />}
+];
 
 
 
