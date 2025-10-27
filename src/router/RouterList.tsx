@@ -7,6 +7,10 @@
 
 import Test from "@/components/Test";
 import CalendarView from "@/pages/CalendarView";
+import GoalSetupView from "@/pages/goal/GoalSetupView";
+import GoalEditView from "@/pages/goal/GoalEditView";
+import AchievementHistoryView from "@/pages/goal/AchievementHistoryView";
+import AchievementDetailView from "@/pages/goal/AchievementDetailView";
 
 // 메인 route list
 const mainList : Array<any> = [ 
@@ -26,6 +30,13 @@ const calendarList : Array<any> = [{path : '/calendar', element :<CalendarView /
 const cardList : Array<any> = [];
 
 
+// 달성도 route list
+const goalList : Array<any> = [
+    {path : '/goal/setGoal', element :<GoalSetupView />},
+    {path : '/goal/editGoal', element :<GoalEditView />},
+    {path : '/goal/achievementHistory', element :<AchievementHistoryView />},
+    {path: "/achievement/detail", element: <AchievementDetailView /> },
+];
 
 
 export const routerList = [
@@ -33,4 +44,5 @@ export const routerList = [
     ...authList,
     ...calendarList,
     ...cardList,
+    ...goalList,
 ];
