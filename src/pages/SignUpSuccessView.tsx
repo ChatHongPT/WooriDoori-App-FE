@@ -5,7 +5,7 @@ import image from "../assets/doori/doori_celebrating.png";
 const SignUpSuccessView = () => {
   return (
     <DefaultDiv>
-      <div className="flex flex-col items-center justify-center min-h-[100vh]">
+      <div className="flex flex-col items-center justify-center mt-[10rem]">
         {/* 축하 이미지 */}
         <img
           src={image}
@@ -23,14 +23,14 @@ const SignUpSuccessView = () => {
           로그인 후 서비스를 이용해주세요
         </p>
 
-{/* 완료 버튼 */}
-<div className="w-full max-w-[33.5rem] flex justify-center mt-[12rem]">
-  <DefaultButton
-    text="로그인으로"
-    onClick={() => (window.location.href = "/login")}
-    className="w-full max-w-[33.5rem]"
-  />
-</div>
+        {/* 완료 버튼 */}
+        <div className="w-full max-w-[33.5rem] flex justify-center mt-[8rem]">
+          <DefaultButton
+            text="로그인으로"
+            onClick={() => (window.location.href = "/login")}
+            className="w-full max-w-[33.5rem]"
+          />
+        </div>
       </div>
     </DefaultDiv>
   );

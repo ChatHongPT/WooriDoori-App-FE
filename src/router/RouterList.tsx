@@ -7,6 +7,11 @@
 
 import Test from "@/components/Test";
 import CalendarView from "@/pages/CalendarView";
+import LoginView from "@/pages/LoginView";
+import SignUpAgreementView from "@/pages/SignUpAgreementView";
+import SignUpView from "@/pages/SignUpView";
+import SignUpSuccessView from "@/pages/SignUpSuccessView";
+import SignUpFailView from "@/pages/SignUpFailView";
 
 // 메인 route list
 const mainList : Array<any> = [ 
@@ -15,6 +20,11 @@ const mainList : Array<any> = [
 
 // 유저 정보 route list
 const authList : Array<any> = [ 
+    { path: '/login', element: <LoginView /> },
+    { path: '/signUp/signUp', element: <SignUpView /> },
+    { path: '/signUp/agreement', element: <SignUpAgreementView />},
+    { path: '/signUp/Success', element: <SignUpSuccessView />},
+    { path: '/signUp/Fail', element: <SignUpFailView />},
 ];
 
 
