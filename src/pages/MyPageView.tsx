@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultDiv from '@/components/default/DefaultDiv';
+import BottomNav from '@/components/default/NavBar';
 import { img } from '@/assets/img';
 
 const MyPageView: React.FC = () => {
@@ -26,7 +27,7 @@ const MyPageView: React.FC = () => {
       </div>
 
       {/* 사용자 프로필 섹션 */}
-      <div className="flex gap-4 items-center mb-8">
+      <div className="flex gap-4 items-center mb-12">
         {/* 프로필 이미지 */}
         <div className="flex overflow-hidden justify-center items-center w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full">
           <img
@@ -48,7 +49,7 @@ const MyPageView: React.FC = () => {
       </div>
 
       {/* 메뉴 섹션 */}
-      <div className="w-full">
+      <div className="mb-8 w-full">
         <h2 className="text-[1.6rem] font-bold text-gray-900 mb-6">
           메뉴
         </h2>
@@ -69,6 +70,11 @@ const MyPageView: React.FC = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* 네비게이션 바 */}
+      <div className="mt-auto">
+        <BottomNav />
       </div>
     </DefaultDiv>
   );
