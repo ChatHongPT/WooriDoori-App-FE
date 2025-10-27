@@ -21,12 +21,6 @@ const UserInfoView: React.FC = () => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
-  const handleInputChange = (field: string, value: string) => {
-    setUserInfo(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
 
   const handleLogout = () => {
     setIsLogoutModalOpen(true);
@@ -78,11 +72,13 @@ const UserInfoView: React.FC = () => {
 
       {/* 프로필 섹션 */}
       <div className="flex justify-between items-center mt-20 mb-10">
-        {/* 프로필 이미지 - 간단한 스마일 아이콘 */}
-        <div className="flex justify-center items-center w-32 h-32 bg-green-500 rounded-full">
-          <div className="text-4xl font-bold text-white">
-            :)
-          </div>
+        {/* 프로필 이미지 - favicon */}
+        <div className="flex justify-center items-center w-32 h-32 bg-green-500 rounded-full overflow-hidden">
+          <img
+            src={img.doori_favicon}
+            alt="프로필"
+            className="w-24 h-24 object-contain"
+          />
         </div>
         
         {/* 버튼들 */}
@@ -103,7 +99,7 @@ const UserInfoView: React.FC = () => {
       </div>
 
       {/* 사용자 정보 입력 폼 */}
-      <div className="space-y-12">
+      <div className="mt-16 space-y-12">
         {/* 아이디 */}
         <div>
           <label className="block text-[1.3rem] font-medium text-gray-800 mb-2">
@@ -112,8 +108,8 @@ const UserInfoView: React.FC = () => {
           <input
             type="email"
             value={userInfo.id}
-            onChange={(e) => handleInputChange('id', e.target.value)}
-            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 focus:outline-none focus:bg-white transition-colors"
+            readOnly
+            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 cursor-not-allowed"
           />
         </div>
 
@@ -125,8 +121,8 @@ const UserInfoView: React.FC = () => {
           <input
             type="password"
             value={userInfo.password}
-            onChange={(e) => handleInputChange('password', e.target.value)}
-            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 focus:outline-none focus:bg-white transition-colors"
+            readOnly
+            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 cursor-not-allowed"
           />
         </div>
 
@@ -138,8 +134,8 @@ const UserInfoView: React.FC = () => {
           <input
             type="text"
             value={userInfo.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
-            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 focus:outline-none focus:bg-white transition-colors"
+            readOnly
+            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 cursor-not-allowed"
           />
         </div>
 
@@ -151,8 +147,8 @@ const UserInfoView: React.FC = () => {
           <input
             type="tel"
             value={userInfo.phone}
-            onChange={(e) => handleInputChange('phone', e.target.value)}
-            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 focus:outline-none focus:bg-white transition-colors"
+            readOnly
+            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 cursor-not-allowed"
           />
         </div>
 
@@ -164,20 +160,12 @@ const UserInfoView: React.FC = () => {
           <input
             type="text"
             value={userInfo.birth}
-            onChange={(e) => handleInputChange('birth', e.target.value)}
-            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 focus:outline-none focus:bg-white transition-colors"
+            readOnly
+            className="w-full px-4 py-3 bg-gray-200 rounded-lg text-[1.2rem] text-gray-600 cursor-not-allowed"
           />
         </div>
       </div>
 
-      {/* 저장 버튼 */}
-      <div className="mt-52">
-        <DefaultButton
-          text="저장"
-          onClick={() => console.log('저장')}
-          className="w-full max-w-none bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
-        />
-      </div>
 
       {/* 네비게이션 바 */}
       <div className="mt-auto">
