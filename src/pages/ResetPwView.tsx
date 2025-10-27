@@ -1,6 +1,6 @@
 import { img } from "@/assets/img";
-import BackButton from "@/components/button/BackButton";
 import DefaultButton from "@/components/button/DefaultButton";
+import IconButton from "@/components/button/IconButton";
 import DefaultDiv from "@/components/default/DefaultDiv";
 import InputBox from "@/components/input/InputBox";
 import Title1 from "@/components/title/Title1";
@@ -9,65 +9,74 @@ import { useState } from "react";
 const ResetPwView = () => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
-  const [errorMsg, setErrorMsg] = useState(""); // ✅ 에러 메시지 상태
+  const [errorMsg, setErrorMsg] = useState("");
 
-  // 이름과 아이디가 모두 입력되면 버튼 활성화
-  const isFormValid = name.trim().length > 0 && id.trim().length > 0;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isFormValid = name.trim().length > 0 && emailRegex.test(id.trim());
 
   const handleConfirm = () => {
-    // 샘플 시나리오: 존재하지 않는 아이디
-    if (id !== "$member_id") {
+    if (!emailRegex.test(id.trim())) {
+      setErrorMsg("유효한 이메일 주소를 입력해주세요.");
+      return;
+    }
+
+    if (id !== "example@gmail.com") {
       setErrorMsg("존재하지 않는 아이디입니다.");
       return;
     }
 
-    // 정상 시 로그인 페이지 이동
     window.location.href = "/newpw";
   };
 
   return (
     <DefaultDiv>
-        <BackButton
-            size={20}
-            onClick={() => (window.location.href = "/login")}
+      {/* 뒤로가기 버튼 */}
+      <IconButton
+        src={img.Vector}
+        alt="뒤로가기"
+        width={6}
+        height={18}
+        onClick={() => (window.location.href = "/login")}
+      />
+
+      <div className="h-8" />
+
+      {/* 로고 */}
+      <img src={img.wooridoorilogo} alt="" className="w-60 mx-auto" />
+      <div className="h-8" />
+
+      {/* 컨텐츠 영역 */}
+      <div className="flex flex-col items-center space-y-6 mt-6 w-full max-w-[30rem] mx-auto">
+        <Title1 text="비밀번호 찾기" />
+
+        <h3 className="text-center">
+          임시 비밀번호를 발급받을 계정을 입력해주세요
+        </h3>
+
+      <div className="h-8" />
+        <InputBox
+          placeholder="이름을 입력해주세요"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+            setErrorMsg("");
+          }}
         />
 
-        <div className="h-8" />
-        <img src={img.wooridoorilogo} alt="" className="w-60 mx-auto"/>
-        <div className="h-8" />
+        {/* 이메일 입력 */}
+        <InputBox
+          placeholder="이메일을 입력해주세요"
+          value={id}
+          onChange={(e) => {
+            setId(e.target.value);
+            setErrorMsg("");
+          }}
+        />
 
-      <Title1 text="비밀번호 찾기" />
-      <div className="h-4" />
-      <h3 className="text-center">
-        임시 비밀번호를 발급받을 계정을 입력해주세요
-      </h3>
-      <div className="h-8" />
-
-      <InputBox
-        placeholder="이름을 입력해주세요"
-        value={name}
-        onChange={(n) => {
-          setName(n.target.value);
-          setErrorMsg(""); // 입력 시 메시지 초기화
-        }}
-      />
-
-      <div className="h-8" />
-
-      <InputBox
-        placeholder="아이디를 입력해주세요"
-        value={id}
-        onChange={(i) => {
-          setId(i.target.value);
-          setErrorMsg(""); // 입력 시 메시지 초기화
-        }}
-      />
-
-      {/* ✅ 샘플 에러 메시지 */}
-      {errorMsg && <p className="text-red-500 mt-2 text-center">{errorMsg}</p>}
-
-      <div className="h-72" />
-      <div className="flex justify-center pt-4">
+        {/* 에러 메시지 */}
+        {errorMsg && <p className="text-red-500 mt-2 text-center">{errorMsg}</p>}
+      <div className="h-48" />
+        {/* 확인 버튼 */}
         <DefaultButton
           text="확인"
           disabled={!isFormValid}

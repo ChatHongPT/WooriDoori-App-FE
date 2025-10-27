@@ -18,6 +18,7 @@ const NewPwView = () => {
   // ✅ 비밀번호 유효성 검사 (영문 또는 숫자, 10자 이상)
   const isValidPassword = (pw: string) => /^[A-Za-z0-9]{10,}$/.test(pw);
 
+  // 확인 버튼
   const handleConfirm = () => {
     if (!isValidPassword(newPw)) {
       setErrorMsg("비밀번호는 숫자 또는 영문 10자 이상으로 설정해야 합니다.");
@@ -50,46 +51,55 @@ const NewPwView = () => {
   return (
     <DefaultDiv>
       <div className="h-16" />
+
+      {/* 로고 */}
       <img src={img.wooridoorilogo} alt="" className="w-60 mx-auto" />
       <div className="h-8" />
 
-      <Title1 text="비밀번호 재설정" />
-      <div className="h-16" />
+      <div className="w-full max-w-[30rem] mx-auto flex flex-col space-y-6">
+        {/* 제목 */}
+        <Title1 text="비밀번호 재설정" />
 
-      <div>
-        <h3 className="font-bold">임시비밀번호</h3>
-        <div className="h-4" />
-        <InputBox
-          placeholder="임시비밀번호를 입력해주세요"
-          value={tempPw}
-          onChange={(e) => setTempPw(e.target.value)}
-        />
-        <div className="h-12" />
+        <div className="h-8" />
+        <div>
+          <h3 className="font-bold text-left">임시비밀번호</h3>
+          <div className="h-2" />
+          <InputBox
+            placeholder="임시비밀번호를 입력해주세요"
+            value={tempPw}
+            onChange={(e) => setTempPw(e.target.value)}
+          />
+        </div>
 
-        <h3 className="font-bold">새 비밀번호</h3>
-        <div className="h-4" />
-        <InputBox
-          placeholder="새로 설정할 비밀번호를 입력해주세요"
-          value={newPw}
-          onChange={(e) => setNewPw(e.target.value)}
-        />
-        <div className="h-12" />
+        {/* 새 비밀번호 */}
+        <div>
+          <h3 className="font-bold text-left">새 비밀번호</h3>
+          <div className="h-2" />
+          <InputBox
+            placeholder="새로 설정할 비밀번호를 입력해주세요"
+            value={newPw}
+            onChange={(e) => setNewPw(e.target.value)}
+          />
+        </div>
 
-        <h3 className="font-bold">새 비밀번호 확인</h3>
-        <div className="h-4" />
-        <InputBox
-          placeholder="새로 설정할 비밀번호를 재입력해주세요"
-          value={confirmPw}
-          onChange={(e) => {
-            setConfirmPw(e.target.value);
-            setErrorMsg("");
-          }}
-        />
+        {/* 새 비밀번호 확인 */}
+        <div>
+          <h3 className="font-bold text-left">새 비밀번호 확인</h3>
+          <div className="h-2" />
+          <InputBox
+            placeholder="새로 설정할 비밀번호를 재입력해주세요"
+            value={confirmPw}
+            onChange={(e) => {
+              setConfirmPw(e.target.value);
+              setErrorMsg("");
+            }}
+          />
+        </div>
 
+        {/* 에러 메시지 */}
         {errorMsg && <p className="text-red-500 mt-2">{errorMsg}</p>}
 
         <div className="h-32" />
-
         <div className="flex justify-center pt-4 gap-8">
           <DefaultButton
             text="SKIP"
@@ -104,6 +114,7 @@ const NewPwView = () => {
         </div>
       </div>
 
+      {/* Confirm Modal */}
       {showConfirmModal && (
         <ConfirmModal
           isOpen
@@ -112,6 +123,7 @@ const NewPwView = () => {
         />
       )}
 
+      {/* Choice Modal */}
       {showChoiceModal && (
         <ChoiceModal
           isOpen
