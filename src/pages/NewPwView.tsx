@@ -35,7 +35,6 @@ const NewPwView = () => {
       setNewPwError("");
     }
 
-    // 새 비밀번호와 확인 입력 일치 여부 체크
     if (newPw !== confirmPw) {
       setConfirmPwError("비밀번호가 일치하지 않습니다!");
       hasError = true;
