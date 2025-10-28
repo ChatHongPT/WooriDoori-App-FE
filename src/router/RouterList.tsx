@@ -14,8 +14,7 @@ import NotificationView from "@/pages/NotificationView";
 
 // 메인 route list
 const mainList : Array<any> = [ 
-    {path : '/', element :<Test />},
-    {path : '/noti', element :<NotificationView />}
+    {path : '/', element :<Test />}
 ];
 
 // 유저 정보 route list
@@ -35,6 +34,9 @@ const calendarList : Array<any> = [
 // 카드 route list
 const cardList : Array<any> = [];
 
+const notiList : Array<any> = [
+    {path : '/noti', element :<NotificationView />}
+];
 
 
 
@@ -43,4 +45,5 @@ export const routerList = [
     ...authList,
     ...calendarList,
     ...cardList,
+    ...notiList,
 ];
