@@ -49,12 +49,30 @@ import doori_thinking from './doori/doori_thinking.png';
 import doori_wallet from './doori/doori_wallet.png';
 import doori_writing from './doori/doori_writing.png';
 import doori_basic from './doori/doori_basic.png';
+import doori_favicon from './doori/favicon.png';
 
 import DeleteIcon from './delete.png';
 import EditIcon from './edit.png';
 import grayCheckRightIcon from './gray_chec_right.png';
 import settingIcon from './setting.png';
 import alarmIcon from './alarm.png';
+import check from './check2.png';
+import fireworkLeft from './fireworkL.png';
+import fireworkRight from './fireworkR.png';
+import scale from './scale.png';
+import gauge from './gauge.png';
+import needle from './needle.png';
+
+
+
+import logoIcon from './logo.png';
+import bgImg from './home/main_banner.png';
+
+import stomIcon from './report/stome.png';
+import scaleIcon from './report/scale_icon.png';
+import testCard from './report/test_card.png';
+import cardBanner from './home/card_banner.png';
+import cardBanner2 from './home/card_banner2.png';
 
 import diaryIcon from './diary.svg';
 import storeIcon from './store.png';
@@ -73,4 +91,10 @@ export const img ={
     doori_basic, 
     
     DeleteIcon, EditIcon, grayCheckRightIcon, settingIcon, alarmIcon, diaryIcon, storeIcon, homeIcon, hospitalIcon, drinkIcon, phoneIcon
+    doori_basic, doori_favicon,
+    check, fireworkLeft, fireworkRight, scale, gauge, needle
+
+
+    logoIcon, bgImg, 
+    stomIcon, scaleIcon, testCard, cardBanner,cardBanner2
 }
