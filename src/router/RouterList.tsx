@@ -16,6 +16,7 @@ import CardAddCompleteView from "@/pages/CardAddCompleteView";
 import DiaryView from "@/pages/DiaryView";
 import DiaryEmotionView from "@/pages/DiaryEmotionView";
 import DiaryWriteView from "@/pages/DiaryWriteView";
+import NotificationView from "@/pages/NotificationView";
 import GoalSetupView from "@/pages/goal/GoalSetupView";
 import GoalEditView from "@/pages/goal/GoalEditView";
 import AchievementHistoryView from "@/pages/goal/AchievementHistoryView";
@@ -85,11 +86,15 @@ const reportList: Array<any> = [
     { path: '/report-card', element: <CardRecomView /> },
 ];
 
+
+
+
 export const routerList = [
     ...mainList,
     ...authList,
     ...calendarList,
     ...cardList,
+    ...notiList,
     ...goalList,
     ...reportList,
     ...accountList,
