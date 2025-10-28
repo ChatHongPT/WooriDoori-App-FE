@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ConfirmModal from "../modal/ConfirmModal";
+import CheckButton from "../button/CheckButton";
 
 interface AgreementFormProps {
   onValidChange?: (isValid: boolean) => void;
@@ -28,37 +29,41 @@ const AgreementForm = ({ onValidChange }: AgreementFormProps) => {
     setAgreements({ terms: next, privacy: next });
   };
 
-  const toggle = (key: keyof typeof agreements) =>
-    setAgreements(prev => ({ ...prev, [key]: !prev[key] }));
+  const toggle = (key: keyof typeof agreements) => {
+    console.log('Toggling:', key, 'current value:', agreements[key]);
+    setAgreements(prev => {
+      const newValue = { ...prev, [key]: !prev[key] };
+      console.log('New agreements:', newValue);
+      return newValue;
+    });
+  };
 
   return (
     <div className="w-[34rem] text-left flex flex-col gap-[2rem] text-[1.5rem] text-gray-700 mb-[6rem]">
       {/* 전체 동의 */}
-      <div className="flex items-center justify-between cursor-pointer" onClick={handleAllCheck}>
+      <div className="flex justify-between items-center cursor-pointer" onClick={handleAllCheck}>
         <div className="flex items-center gap-[1rem]">
-          <input
-            type="checkbox"
+          <CheckButton
             checked={allChecked}
-            readOnly
-            className="w-[1.8rem] h-[1.8rem] accent-green-500"
+            onChange={handleAllCheck}
+            size={20}
           />
-          <span className="font-bold text-[1.8rem]">전체 동의</span>
+          <span className={`font-bold text-[1.4rem] ${allChecked ? "text-green-600" : "text-gray-800"}`}>전체 동의</span>
         </div>
       </div>
 
       {/* 온라인서비스 회원약관 */}
-      <div className="flex items-center justify-between">
-        <div
-          className="flex items-center gap-[1rem] cursor-pointer"
-          onClick={() => toggle("terms")}
-        >
-          <input
-            type="checkbox"
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-[1rem]">
+          <CheckButton
             checked={agreements.terms}
-            readOnly
-            className="w-[1.8rem] h-[1.8rem] accent-green-500"
+            onChange={(checked) => {
+              console.log('Terms onChange:', checked);
+              setAgreements(prev => ({ ...prev, terms: checked }));
+            }}
+            size={18}
           />
-          <span>
+          <span className="cursor-pointer" onClick={() => toggle("terms")}>
             온라인서비스 회원약관 <span className="text-red-500">(필수)</span>
           </span>
         </div>
@@ -72,18 +77,17 @@ const AgreementForm = ({ onValidChange }: AgreementFormProps) => {
       </div>
 
       {/* 개인정보 취급방침 */}
-      <div className="flex items-center justify-between">
-        <div
-          className="flex items-center gap-[1rem] cursor-pointer"
-          onClick={() => toggle("privacy")}
-        >
-          <input
-            type="checkbox"
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-[1rem]">
+          <CheckButton
             checked={agreements.privacy}
-            readOnly
-            className="w-[1.8rem] h-[1.8rem] accent-green-500"
+            onChange={(checked) => {
+              console.log('Privacy onChange:', checked);
+              setAgreements(prev => ({ ...prev, privacy: checked }));
+            }}
+            size={18}
           />
-          <span>
+          <span className="cursor-pointer" onClick={() => toggle("privacy")}>
             개인정보 취급방침 동의 <span className="text-red-500">(필수)</span>
           </span>
         </div>
@@ -99,10 +103,11 @@ const AgreementForm = ({ onValidChange }: AgreementFormProps) => {
       {/* 회원약관 모달 */}
       <ConfirmModal
         isOpen={showTerms}
-        onClose={() => setShowTerms(false)}
+        onCancel={() => setShowTerms(false)}
+        onConfirm={() => setShowTerms(false)}
         message={
           <div className="max-h-[60vh] overflow-y-auto text-left text-gray-700 text-[0.95rem] leading-relaxed space-y-3">
-            <h2 className="text-lg font-bold mb-2">온라인서비스 회원약관</h2>
+            <h2 className="mb-2 text-lg font-bold">온라인서비스 회원약관</h2>
             <p>
               제 1 조(목 적)<br />
               이 약관은 주식회사 우리카드(이하 “카드사”라 함)가 온라인(인터넷,
@@ -132,17 +137,18 @@ const AgreementForm = ({ onValidChange }: AgreementFormProps) => {
             </p>
           </div>
         }
-        btnTitle="확인"
-        btnColor="#16A34A"
+        confirmTitle="확인"
+        confirmColor="#16A34A"
       />
 
       {/* 개인정보 모달 */}
       <ConfirmModal
         isOpen={showPrivacy}
-        onClose={() => setShowPrivacy(false)}
+        onCancel={() => setShowPrivacy(false)}
+        onConfirm={() => setShowPrivacy(false)}
         message={
           <div className="max-h-[60vh] overflow-y-auto text-left text-gray-700 text-[0.95rem] leading-relaxed space-y-3">
-            <h2 className="text-lg font-bold mb-2">개인정보 취급방침 동의</h2>
+            <h2 className="mb-2 text-lg font-bold">개인정보 취급방침 동의</h2>
             <p>
               귀하의 계약과 관련하여 귀사가 본인의 개인(신용)정보를 수집·이용하고자 하는 경우에는
               「신용정보의 이용 및 보호에 관한 법률」 제32조 및 제33조, 제34조,
@@ -153,25 +159,25 @@ const AgreementForm = ({ onValidChange }: AgreementFormProps) => {
               이에 본인은 귀사가 아래와 같이 본인의 개인(신용)정보를 수집·이용하는 것에 대하여 동의합니다.
               이 동의서는 계약의 갱신 등으로 변경되는 경우에도 유효합니다.
             </p>
-            <h3 className="font-semibold mt-2">1. 수집·이용 목적</h3>
+            <h3 className="mt-2 font-semibold">1. 수집·이용 목적</h3>
             <p>
               회원제 서비스 이용에 따른 본인확인, 실명인증, 회원가입, 가맹점 정보 안내 등 서비스 제공.
             </p>
-            <h3 className="font-semibold mt-2">2. 수집 항목</h3>
+            <h3 className="mt-2 font-semibold">2. 수집 항목</h3>
             <p>
               가맹점번호, 사업자번호, 성명, 아이디, 비밀번호, 핸드폰번호, IP주소, 단말정보 등.
             </p>
-            <h3 className="font-semibold mt-2">3. 보유 및 이용 기간</h3>
+            <h3 className="mt-2 font-semibold">3. 보유 및 이용 기간</h3>
             <p>
               개인정보는 이용 목적이 달성되면 지체 없이 파기합니다. 단, 관련 법령에 따라 일정 기간 보관될 수 있습니다.
             </p>
-            <p className="text-red-600 font-medium">
+            <p className="font-medium text-red-600">
               ※ 귀하는 동의를 거부할 권리가 있으나, 동의하지 않을 경우 회원가입이 불가능할 수 있습니다.
             </p>
           </div>
         }
-        btnTitle="확인"
-        btnColor="#16A34A"
+        confirmTitle="확인"
+        confirmColor="#16A34A"
       />
     </div>
   );
