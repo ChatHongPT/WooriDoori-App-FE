@@ -103,7 +103,7 @@ const ReportView = () => {
 
   return (
     <ReportLayout mainText={title} isMainTextCenter={false}
-      onButtonClick={onClick} onBack={() => { onClick("back") }} onClose={() => { window.location.href = '/'; }}
+      onButtonClick={onClick} onBack={() => { onClick("back") }} onClose={() => { window.location.href = '/home'; }}
     >
       {
         renderPage()

@@ -1,4 +1,5 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
+import { Link } from "react-router-dom";
 import { loginUser } from "../../api/userApi";
 
 export interface LoginFormRef {
@@ -83,7 +84,7 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
   }));
 
   return (
-    <div className="w-full mx-auto mb-[24rem] flex flex-col gap-[1.4rem] items-center">
+    <div className="w-full mx-auto mb-[15rem] flex flex-col gap-[1.5rem] items-center">
       {/* 이메일 입력 */}
       <div className="w-full max-w-[33.5rem]">
         <input
@@ -91,7 +92,7 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
           value={email}
           onChange={handleEmailChange}
           placeholder="이메일 주소를 입력해주세요"
-          className={`w-full px-4 py-3 rounded-lg outline-none border text-gray-800 bg-white transition ${
+          className={`w-full px-6 py-4 rounded-lg outline-none border text-gray-800 bg-white transition text-[1.3rem] ${
             emailError ? "border-red-400" : "border-gray-300"
           }`}
         />
@@ -109,7 +110,7 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
           value={password}
           onChange={handlePasswordChange}
           placeholder="비밀번호를 입력해주세요"
-          className={`w-full px-4 py-3 rounded-lg outline-none border text-gray-800 bg-white transition ${
+          className={`w-full px-6 py-4 rounded-lg outline-none border text-gray-800 bg-white transition text-[1.3rem] ${
             pwError ? "border-red-400" : "border-gray-300"
           }`}
         />
@@ -118,20 +119,20 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
         )}
 
         {/* 아이디 / 비밀번호 찾기 */}
-        <div className="absolute right-0 bottom-[-2.8rem] flex gap-[1.6rem] text-[1.2rem] text-gray-500">
-          <a
-            href="/find-id"
-            className="transition hover:text-green-600 hover:underline"
+        <div className="absolute right-0 bottom-[-3rem] flex gap-[1.6rem] text-gray-500">
+          <Link
+            to="/searchid"
+            className="text-xl transition hover:text-green-600 hover:underline"
           >
             아이디 찾기
-          </a>
-          <span>|</span>
-          <a
-            href="/find-password"
-            className="transition hover:text-green-600 hover:underline"
+          </Link>
+          <span className="text-xl">|</span>
+          <Link
+            to="/resetpw"
+            className="text-xl transition hover:text-green-600 hover:underline"
           >
             비밀번호 찾기
-          </a>
+          </Link>
         </div>
       </div>
     </div>

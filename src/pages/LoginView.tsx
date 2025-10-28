@@ -23,16 +23,16 @@ const LoginView = () => {
 
   return (
     <DefaultDiv>
-      <div className="pt-[3rem] flex flex-col items-center">
+      <div className="pt-[1rem] flex flex-col items-center">
         {/* 로고 */}
         <img
           src={logo}
           alt="login logo"
-          className="w-[18rem] mb-[1.5rem] select-none"
+          className="w-[18rem] mb-[8rem] select-none"
         />
 
         {/* 타이틀 */}
-        <div className="mb-[10rem]">
+        <div className="mb-[8rem]">
           <Title1 text="로그인" />
         </div>
 
@@ -40,11 +40,11 @@ const LoginView = () => {
         <LoginForm ref={formRef} />
 
         {/* 하단 회원가입 링크 */}
-        <p className="text-[1rem] text-gray-500 mb-[1rem]">
+        <p className="text-[1.2rem] text-gray-500 mb-[1rem]">
           아직 회원이 아니신가요?{" "}
           <Link
             to="/signup/agreement"
-            className="font-medium text-green-600 transition hover:text-green-700 hover:underline"
+            className="text-[1.2rem] font-medium text-green-600 transition hover:text-green-700 hover:underline"
           >
             회원가입하기
           </Link>

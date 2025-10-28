@@ -1,20 +1,34 @@
 import React, { useState } from "react";
 
 interface CheckButtonProps {
-  defaultChecked?: boolean;
+  defaultChecked?: boolean; // 비제어 초기값
+  checked?: boolean; // 제어 값
+  onChange?: (nextChecked: boolean) => void; // 제어 변경 핸들러
   size?: number; // px 단위
   disabled?: boolean;
 }
 
 const CheckButton = ({
   defaultChecked = false,
+  checked: controlledChecked,
+  onChange,
   size = 24,
   disabled = false,
 }: CheckButtonProps) => {
-  const [checked, setChecked] = useState(defaultChecked);
+  const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked);
+
+  const isControlled = typeof controlledChecked === "boolean";
+  const checked = isControlled ? controlledChecked : uncontrolledChecked;
 
   const toggle = () => {
-    if (!disabled) setChecked((prev) => !prev);
+    if (disabled) return;
+    const next = !checked;
+    if (isControlled) {
+      onChange?.(next);
+    } else {
+      setUncontrolledChecked(next);
+      onChange?.(next);
+    }
   };
 
   return (
