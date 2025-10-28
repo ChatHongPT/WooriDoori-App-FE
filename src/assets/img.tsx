@@ -57,6 +57,8 @@ import EditIcon from './edit.png';
 import grayCheckRightIcon from './gray_chec_right.png';
 import settingIcon from './setting.png';
 import alarmIcon from './alarm.png';
+import searchIcon from './search.png';
+import wooriCard from './woori_card.png';
 import wooriDooriLogo from './woori_doori_logo.png';
 import check from './check2.png';
 import fireworkLeft from './fireworkL.png';
@@ -93,6 +95,7 @@ export const img ={
     doori_basic, cardExample,
     wooriDooriLogo,
     
+    searchIcon, wooriCard,
     DeleteIcon, EditIcon, grayCheckRightIcon, settingIcon, alarmIcon, diaryIcon, storeIcon, homeIcon, hospitalIcon, drinkIcon, phoneIcon
     doori_basic, doori_favicon,
     check, fireworkLeft, fireworkRight, scale, gauge, needle
