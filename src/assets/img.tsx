@@ -57,11 +57,9 @@ import EditIcon from './edit.png';
 import grayCheckRightIcon from './gray_chec_right.png';
 import settingIcon from './setting.png';
 import alarmIcon from './alarm.png';
-import wooridoorilogo from './searchid/wooridoorilogo.png'
 import goindol from './searchid/goindol.png'
 import searchIcon from './search.png';
 import wooriCard from './woori_card.png';
-import wooriDooriLogo from './woori_doori_logo.png';
 import check from './check2.png';
 import fireworkLeft from './fireworkL.png';
 import fireworkRight from './fireworkR.png';
@@ -74,8 +72,6 @@ import megacoffee from './megacoffee.png';
 import twosomecoffee from './twosomecoffee.png';
 import dooriBubble from './doori/doori_bubble.png';
 
-
-import logoIcon from './woori_doori_logo.png';
 import bgImg from './home/main_banner.png';
 
 import stomIcon from './report/stome.png';
@@ -91,6 +87,10 @@ import hospitalIcon from './hospital.png';
 import drinkIcon from './drink.png';
 import phoneIcon from './phone.png';
 
+import wooridoori_logo from './logo/logo.png';
+import woori_logo from './logo/woori_logo.png';
+
+
 
 export const img ={
     cardIcon, BsX, Vector, calendarB, calendarW, cardB, cardW, homeB, homeW, menuB, menuW, education, traffic, etc, 
@@ -98,9 +98,9 @@ export const img ={
     doori_card, doori_celebrating, doori_cheering, doori_coffee, doori_coin_warning, doori_cool, doori_counting_coins, doori_crying,
     doori_drawing, doori_face1, doori_face2, doori_face3, doori_face4, doori_face5, doori_facepalm, doori_frustrated, doori_ghost,
     doori_heart, doori_normal, doori_pouting, doori_question, doori_report, doori_thinking, doori_wallet, doori_writing,
-    doori_basic, wooridoorilogo, goindol,
+    doori_basic, goindol,
     cardExample,
-    wooriDooriLogo,
+    wooridoori_logo, woori_logo,
     
     searchIcon, wooriCard,
     DeleteIcon, EditIcon, grayCheckRightIcon, settingIcon, alarmIcon, diaryIcon, storeIcon, homeIcon, hospitalIcon, drinkIcon, phoneIcon
@@ -108,6 +108,6 @@ export const img ={
     check, fireworkLeft, fireworkRight, scale, gauge, needle,
 
 
-    logoIcon, bgImg, 
+    bgImg, 
     stomIcon, scaleIcon, testCard, cardBanner,cardBanner2, bubble, starbucks, megacoffee, twosomecoffee, dooriBubble
 }
