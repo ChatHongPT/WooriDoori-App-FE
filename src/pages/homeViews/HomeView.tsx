@@ -66,9 +66,9 @@ const HomeView = () => {
     <DefaultDiv isHome={true}>
       {/* 해더 */}
       <header className="flex justify-between items-center">
-        <img src={img.logoIcon} alt="우리두리" width={70} />
+        <img src={img.wooridoori_logo} alt="우리두리" width={100} />
         <div onClick={() => navigate('/notification')} className="cursor-pointer">
-          <IconButton src={img.alarmIcon} alt="알람" width={22} height={22} />
+          <IconButton src={img.alarmOn} alt="알람" width={45} height={45} />
         </div>
       </header>
 
