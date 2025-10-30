@@ -6,7 +6,7 @@ export interface CardValidationErrors {
   birthDate?: string;
 }
 
-export interface CardData {
+export interface cardValidData {
   cardNumber: string[];
   expiryDate: string;
   cvc: string;
@@ -14,41 +14,41 @@ export interface CardData {
   birthDate: string;
 }
 
-export const validateCard = (cardData: CardData): { isValid: boolean; errors: CardValidationErrors } => {
+export const validateCard = (cardValidData: cardValidData): { isValid: boolean; errors: CardValidationErrors } => {
   const errors: CardValidationErrors = {};
 
   // 카드번호 검증 (16자리)
-  const fullCardNumber = cardData.cardNumber.join('');
+  const fullCardNumber = cardValidData.cardNumber.join('');
   if (fullCardNumber.length !== 16) {
     errors.cardNumber = '카드번호는 16자리여야 합니다.';
   }
 
   // 유효기간 검증 (MMYY 형식)
-  if (cardData.expiryDate.length !== 4) {
+  if (cardValidData.expiryDate.length !== 4) {
     errors.expiryDate = '유효기간은 4자리여야 합니다.';
   } else {
-    const month = parseInt(cardData.expiryDate.slice(0, 2));
+    const month = parseInt(cardValidData.expiryDate.slice(0, 2));
     if (month < 1 || month > 12) {
       errors.expiryDate = '월은 01-12 사이여야 합니다.';
     }
   }
 
   // CVC 검증 (3-4자리)
-  if (cardData.cvc.length < 3 || cardData.cvc.length > 4) {
+  if (cardValidData.cvc.length < 3 || cardValidData.cvc.length > 4) {
     errors.cvc = 'CVC번호는 3-4자리여야 합니다.';
   }
 
   // 비밀번호 검증 (2자리)
-  if (cardData.password.length !== 2) {
+  if (cardValidData.password.length !== 2) {
     errors.password = '비밀번호는 2자리여야 합니다.';
   }
 
   // 주민등록번호 검증 (7자리: 6자리 생년월일 + 1자리 성별코드)
-  if (cardData.birthDate.length !== 7) {
+  if (cardValidData.birthDate.length !== 7) {
     errors.birthDate = '주민등록번호는 7자리여야 합니다.';
   } else {
-    const birthPart = cardData.birthDate.slice(0, 6);
-    const genderCode = cardData.birthDate.slice(6, 7);
+    const birthPart = cardValidData.birthDate.slice(0, 6);
+    const genderCode = cardValidData.birthDate.slice(6, 7);
     
     // 생년월일 검증 (YYMMDD)
     const month = parseInt(birthPart.slice(2, 4));
