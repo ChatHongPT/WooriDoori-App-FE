@@ -4,7 +4,7 @@ import DefaultButton from '@/components/button/DefaultButton';
 import BottomButtonWrapper from "@/components/button/BottomButtonWrapper";
 import DefaultDiv from '@/components/default/DefaultDiv';
 import { img } from '@/assets/img';
-import { addCard } from '@/utils/cardData';
+import { addCard } from '@/utils/card/cardData';
 
 interface CardData {
   cardNumber: string[];
