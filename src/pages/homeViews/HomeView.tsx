@@ -4,7 +4,6 @@ import IconButton from "@/components/button/IconButton";
 import ConsumptionCategory from "@/components/category/ConsumptionCategory";
 import BorderBox from "@/components/default/BorderBox";
 import DefaultDiv from "@/components/default/DefaultDiv"
-import BottomNav from "@/components/default/NavBar";
 import MainBanner from "@/components/home/MainBanner";
 import ProgressDonet from "@/components/Progress/ProgressDonet";
 import { useEffect, useState } from "react";
@@ -37,17 +36,18 @@ const HomeView = () => {
     { name: "기타", value: 80000, color: "#C4C4C4" },
   ];
   const topCategoryList = [
-    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.food, label: '식비' },
-    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.food, label: '식비' },
-    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.food, label: '식비' },
-    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.food, label: '식비' },
-    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.food, label: '식비' },
+    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.foodIcon, label: '식비' },
+    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.foodIcon, label: '식비' },
+    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.foodIcon, label: '식비' },
+    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.foodIcon, label: '식비' },
+    { bgColor: 'bg-[#FF8353]', amount: '200,000원', iconSrc: img.foodIcon, label: '식비' },
 
   ];
 
   const cardBannerList = [
     { url: '', src: img.cardBanner },
     { url: '', src: img.cardBanner2 },
+    { url: '', src: img.cardBanner3 },
   ];
 
 
@@ -61,9 +61,9 @@ const HomeView = () => {
     return () => clearInterval(interval);
   }, []);
 
-
+//isBottomNav={true}
   return (
-    <DefaultDiv isHome={true}>
+    <DefaultDiv isHome={true} >
       {/* 해더 */}
       <header className="flex justify-between items-center">
         <img src={img.wooridoori_logo} alt="우리두리" width={100} />
@@ -87,8 +87,8 @@ const HomeView = () => {
           aria-label="달성도 보기"
         >
           <MainBanner
-            totalDays={30}
-            passedDays={20}
+            consumPercent={80}
+            remainDays={2}
             bgImage={img.bgImg}
             bgColor="#4C8B73"
             progressColor="#FFD84D"
@@ -99,7 +99,7 @@ const HomeView = () => {
         <div className="flex gap-3 mt-8">
           {/* 목표 */}
           <BorderBox>
-            <div onClick={() => navigate('/goal/setGoal')} className="flex relative flex-col justify-start items-center h-full cursor-pointer">
+            <div onClick={() => navigate('/goal/editGoal')} className="flex relative flex-col justify-start items-center h-full cursor-pointer">
               <h3 className="text-[1.6rem] font-semibold mt-3">이번달 목표</h3>
               <p className="mt-5 text-[1.3rem] font-semibold text-center">{target}</p>
 
@@ -159,9 +159,6 @@ const HomeView = () => {
           </div>
         </div>
       </main>
-
-      {/* 네브바 */}
-      <BottomNav />
     </DefaultDiv>
   )
 }
