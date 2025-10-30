@@ -66,7 +66,7 @@ const NewPwView = () => {
     <DefaultDiv>
       <div className="h-16" />
 
-      <img src={img.wooridoorilogo} alt="" className="w-60 mx-auto" />
+      <img src={img.woori_logo} alt="" className="w-60 mx-auto" />
       <div className="h-8" />
 
       <div className="w-full max-w-[30rem] mx-auto flex flex-col space-y-6">
