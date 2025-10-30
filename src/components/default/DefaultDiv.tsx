@@ -17,7 +17,8 @@ const DefaultDiv = ({
     onClose,
     onClickSetting,
     headerClassName = "",
-    isMainTitle = false
+    isMainTitle = false,
+    headerChildren,
 }:
     {
         children: React.ReactNode,
@@ -36,7 +37,8 @@ const DefaultDiv = ({
         onClose?: () => void;
         onClickSetting?: () => void;
         headerClassName?: string;
-        isMainTitle?: boolean
+        isMainTitle?: boolean,
+        headerChildren? :React.ReactNode,
     }
 ) => {
     return (
@@ -53,6 +55,7 @@ const DefaultDiv = ({
                     onClickSetting={onClickSetting}
                     className={headerClassName}
                     isMainTitle={isMainTitle}
+                    children={headerChildren}
                 />
             }
             <div className={`flex-1  ${isHeader ? 'pt-[5rem] pb-[5rem]' : ''}`}>

@@ -9,7 +9,10 @@ interface HeaderBarProps {
   onClose?: () => void;
   onClickSetting?: () => void;
   className?: string;
-  isMainTitle?: boolean
+  isMainTitle?: boolean,
+
+  
+  children?: React.ReactNode,
 }
 
 const HeaderBar = ({
@@ -21,7 +24,8 @@ const HeaderBar = ({
   onClose,
   onClickSetting,
   className = "",
-  isMainTitle = false
+  isMainTitle = false,
+  children,
 }: HeaderBarProps) => {
   return (
     <header
@@ -78,6 +82,10 @@ const HeaderBar = ({
           <img src={img.settingIcon} alt="설정" className="object-contain w-7 h-7" />
         </button>
       )}
+      
+      {
+        children
+      }
 
 
 
