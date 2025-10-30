@@ -39,7 +39,7 @@ const CardAddComplete: React.FC = () => {
       {/* 로고 - 우측 상단 */}
       <div className="absolute top-4 right-4 z-10">
         <img
-          src={img.wooriDooriLogo}
+          src={img.wooridoori_logo}
           alt="우리두리 로고"
           className="w-28 h-auto"
         />
