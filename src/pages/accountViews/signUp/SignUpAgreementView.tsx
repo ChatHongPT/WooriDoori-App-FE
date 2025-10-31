@@ -21,10 +21,11 @@ const SignUpAgreementView = () => {
       isShowSetting={false}
       onClose={handleClose}
       isMainTitle={false}
+      className="overflow-hidden" 
     >
 
       {/* 본문 */}
-      <div className="h-full pt-[8rem] flex flex-col items-center justify-between">
+      <div className="flex flex-col flex-1 items-center justify-between pt-[3rem]">
         <div className="flex flex-col items-center">
           <div className="w-[34rem] text-left mb-[3rem]">
           <p className="text-[2rem] font-bold text-gray-800 leading-relaxed">
