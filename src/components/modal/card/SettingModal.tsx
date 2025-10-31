@@ -17,7 +17,7 @@ export const SettingModal = (
       onClick={onClose}
     >
       <div
-        className={`w-[400px] h-[170px] bg-white rounded-t-3xl shadow-lg flex flex-col transform transition-transform duration-500 ease-out bottom-sheet
+        className={`w-full max-w-[400px] h-[170px] bg-white rounded-t-3xl shadow-lg flex flex-col transform transition-transform duration-500 ease-out bottom-sheet
           ${isOpen ? 'active' : 'hide'
           }`}
         onClick={(e) => e.stopPropagation()}
