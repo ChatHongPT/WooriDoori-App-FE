@@ -132,12 +132,14 @@ export default function GoalEditView() {
           </div>
 
           {/* 완료 텍스트 */}
-          <h2 className="mt-[13rem]">
+          <div className="mt-[13rem] text-center">
             <Title2 text="목표 금액을 수정했어요" />
-          </h2>
+            <SubText text="수정된 목표 금액은 다음 달부터 적용됩니다." className="mt-[1.2rem]" />
+          </div>
+
 
           {/* 수입 / 목표 요약 */}
-          <div className="w-[85%] mt-[27rem] flex flex-col gap-[1rem] mx-auto">
+          <div className="w-[85%] mt-[24rem] flex flex-col gap-[1rem] mx-auto">
             <div className="flex justify-between">
               <span className="text-[#A1A1A1] text-[1.3rem]">한달 내 수입</span>
               <span className="text-[#4D4D4D] font-semibold text-[1.5rem]">
