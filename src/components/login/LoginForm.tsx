@@ -1,6 +1,5 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { Link } from "react-router-dom";
-import { loginUser } from "../../api/userApi";
 
 export interface LoginFormRef {
   handleLogin: () => Promise<boolean>;
@@ -41,44 +40,44 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
   };
 
   // 외부에서 실행할 수 있는 로그인 검증 로직
-  useImperativeHandle(ref, () => ({
-    handleLogin: async () => {
-      // 이메일 검증
-      if (!email) {
-        setEmailError("이메일을 입력해주세요.");
-        return false;
-      }
-      if (!emailRegex.test(email)) {
-        setEmailError("올바른 이메일 주소를 입력해주세요.");
-        return false;
-      }
+  // useImperativeHandle(ref, () => ({
+  //   handleLogin: async () => {
+  //     // 이메일 검증
+  //     if (!email) {
+  //       setEmailError("이메일을 입력해주세요.");
+  //       return false;
+  //     }
+  //     if (!emailRegex.test(email)) {
+  //       setEmailError("올바른 이메일 주소를 입력해주세요.");
+  //       return false;
+  //     }
 
-      // 비밀번호 검증
-      if (!password) {
-        setPwError("비밀번호를 입력해주세요.");
-        return false;
-      }
-      if (password.length < 6) {
-        setPwError("비밀번호는 6자리 이상이어야 합니다.");
-        return false;
-      }
+  //     // 비밀번호 검증
+  //     if (!password) {
+  //       setPwError("비밀번호를 입력해주세요.");
+  //       return false;
+  //     }
+  //     if (password.length < 6) {
+  //       setPwError("비밀번호는 6자리 이상이어야 합니다.");
+  //       return false;
+  //     }
 
-      try {
-        // API 호출
-        const result = await loginUser(email, password);
+  //     try {
+  //       // API 호출
+  //       const result = await loginUser(email, password);
 
-        if (result.success) {
-          // 로그인 성공 시 사용자 정보를 localStorage에 저장
-          localStorage.setItem('userInfo', JSON.stringify(result.data));
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        return false;
-      }
-    },
-  }));
+  //       if (result.success) {
+  //         // 로그인 성공 시 사용자 정보를 localStorage에 저장
+  //         localStorage.setItem('userInfo', JSON.stringify(result.data));
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     } catch (error) {
+  //       return false;
+  //     }
+  //   },
+  // }));
 
   return (
     <div className="w-full mx-auto mb-[10rem] flex flex-col gap-[1rem] items-center">
