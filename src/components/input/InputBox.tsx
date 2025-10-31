@@ -9,6 +9,7 @@ interface InputBoxProps {
   disabled?: boolean;
   type? :string;  //비밀번호 마스킹용
 
+  maxLength? : number,
   isReadOnly?: boolean,
   onClick?: React.MouseEventHandler<HTMLInputElement> | undefined,
   className?: string,
@@ -26,6 +27,7 @@ const InputBox = ({
   focusColor = "focus:ring-green-300",
   disabled = false,
   type = "text",
+  maxLength,
   isReadOnly = false,
   onClick,
   className,
@@ -40,11 +42,12 @@ const InputBox = ({
       readOnly={isReadOnly}
       placeholder={placeholder}
       disabled={disabled}
+      maxLength={maxLength}
       className={`
         h-[4rem] text-[1.2rem] font-medium
         flex-1 px-4 py-3 w-full rounded-lg border transition outline-none 
          ${textColor} ${bgColor} ${focusColor} ${isError ? 'border-[#FF0000]' : `${borderColor}`}
-        disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed 
+        disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed  focus:border-[#00C42E]
         ${className}
       `}
     />
