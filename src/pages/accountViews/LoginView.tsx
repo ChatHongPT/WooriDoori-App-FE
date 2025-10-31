@@ -45,7 +45,7 @@ const LoginView = () => {
         <LoginForm ref={formRef} />
 
         {/* 하단 회원가입 링크 */}
-        <p className="text-[1.2rem] text-gray-500 mb-[1rem]">
+        <p className="text-[1.2rem] text-gray-500 mb-[4rem]">
           아직 회원이 아니신가요?{" "}
           <Link
             to="/signup/agreement"

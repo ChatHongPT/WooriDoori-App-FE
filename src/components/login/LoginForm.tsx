@@ -81,7 +81,7 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
   }));
 
   return (
-    <div className="w-full mx-auto mb-[15rem] flex flex-col gap-[1.5rem] items-center">
+    <div className="w-full mx-auto mb-[10rem] flex flex-col gap-[1rem] items-center">
       {/* 이메일 입력 */}
       <div className="w-full max-w-[33.5rem]">
         <input
@@ -93,11 +93,19 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
             emailError ? "border-red-400" : "border-gray-300"
           }`}
         />
-        {emailError && (
+        {/* {emailError && (
           <p className="text-[1.2rem] text-red-500 mt-[0.4rem]">
             {emailError}
           </p>
         )}
+      </div> */}
+              <p
+          className={`text-[1.2rem] mt-[0.4rem] h-[1.6rem] transition-colors duration-200 ${
+            emailError ? "text-red-500" : "text-transparent"
+          }`}
+        >
+          {emailError || "placeholder"}
+        </p>
       </div>
 
       {/* 비밀번호 입력 */}
@@ -111,12 +119,20 @@ const LoginForm = forwardRef<LoginFormRef>((_, ref) => {
             pwError ? "border-red-400" : "border-gray-300"
           }`}
         />
-        {pwError && (
+        {/* {pwError && (
           <p className="text-[1.2rem] text-red-500 mt-[0.4rem]">{pwError}</p>
-        )}
+        )} */}
+
+         <p
+          className={`text-[1.2rem] mt-[0.4rem] h-[1.6rem] transition-colors duration-200 ${
+            pwError ? "text-red-500" : "text-transparent"
+          }`}
+        >
+          {pwError || "placeholder"}
+        </p>
 
         {/* 아이디 / 비밀번호 찾기 */}
-        <div className="absolute right-0 bottom-[-3rem] flex gap-[1.6rem] text-gray-500">
+        <div className="absolute right-0 bottom-[-2rem] flex gap-[1.6rem] text-gray-500">
           <Link
             to="/searchid"
             className="text-xl transition hover:text-green-600 hover:underline"
