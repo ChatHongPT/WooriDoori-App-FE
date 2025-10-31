@@ -48,29 +48,42 @@ const CardManagement: React.FC = () => {
         title='카드 관리' isMainTitle={true} isShowClose={isEditMode} isShowSetting={!isEditMode} onClickSetting={toggleSettingsModal} onClose={toggleEditMode}
       >
 
+        <div
+          className="
+            absolute
+            left-0 right-0
+            /* 헤더 바로 아래부터 시작 */
+            top-[7rem]
+            /* 아래는 바텀버튼/바텀탭 안 가리게 여백 */
+            bottom-[12rem]
+            overflow-y-auto
+            px-4
+            pb-6
+          "
+        >
 
-        <SubText text={`총 등록 (${cards.length}개)`} />
+          <SubText text={`총 등록 (${cards.length}개)`} />
 
-        <div className="space-y-2">
-          {cards.map(card => (
-            <div key={card.id} className="origin-top-left scale-90">
-              <MyCardBox
-                src={card.cardImage}
-                alt={card.title}
-                title={card.title}
-                cardName={card.cardName}
-                cardNum={card.cardNum}
-                content={card.benefits}
-                isEidit={card.isEdit}
-                isEditMode={isEditMode}
-                onEditTitle={() => updateCardTitle(card.id, card.title)}
-                onDelete={() => handleDeleteCard(card.id)}
-                onEditNickname={() => openNicknameModal(card.id, card.title)}
-              />
-            </div>
-          ))}
+          <div className="space-y-2">
+            {cards.map(card => (
+              <div key={card.id} className="origin-top-left scale-90">
+                <MyCardBox
+                  src={card.cardImage}
+                  alt={card.title}
+                  title={card.title}
+                  cardName={card.cardName}
+                  cardNum={card.cardNum}
+                  content={card.benefits}
+                  isEidit={card.isEdit}
+                  isEditMode={isEditMode}
+                  onEditTitle={() => updateCardTitle(card.id, card.title)}
+                  onDelete={() => handleDeleteCard(card.id)}
+                  onEditNickname={() => openNicknameModal(card.id, card.title)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-
 
         {isEditMode && (
           <BottomButtonWrapper>
