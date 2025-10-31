@@ -54,6 +54,7 @@ import doori_wallet from './doori/doori_wallet.png';
 import doori_writing from './doori/doori_writing.png';
 import doori_basic from './doori/doori_basic.png';
 import doori_favicon from './doori/favicon.png';
+import doori_bubbole from './doori/doori_bubbole.png';
 
 import DeleteIcon from './delete.png';
 import EditIcon from './edit.png';
@@ -72,7 +73,6 @@ import bubble from './bubble.png';
 import starbucks from './starbucks.png';
 import megacoffee from './megacoffee.png';
 import twosomecoffee from './twosomecoffee.png';
-import dooriBubble from './doori/doori_bubble.png';
 
 import bgImg from './home/main_banner.png';
 
@@ -113,5 +113,5 @@ export const img ={
     check, fireworkLeft, fireworkRight, scale, gauge, needle,
 
     bgImg, 
-    stoneIcon, copperIcon, silverIcon, goldIcon, emeraldIcon, scaleIcon, testCard, cardBanner, cardBanner2, cardBanner3, bubble, starbucks, megacoffee, twosomecoffee, dooriBubble
+    stoneIcon, copperIcon, silverIcon, goldIcon, emeraldIcon, scaleIcon, testCard, cardBanner, cardBanner2, cardBanner3, bubble, starbucks, megacoffee, twosomecoffee, doori_bubbole
 }
