@@ -47,7 +47,7 @@ const ResetPwView = () => {
       <div className="h-8" />
 
       {/* 컨텐츠 영역 */}
-      <div className="flex flex-col items-center space-y-6 mt-6 w-full max-w-[30rem] mx-auto">
+      <div className="flex flex-col items-start w-full max-w-[30rem] mx-auto">
         <Title1 text="비밀번호 찾기" />
 
         <h3 className="text-center">
@@ -57,7 +57,9 @@ const ResetPwView = () => {
       <div className="h-8" />
         <InputBox
           placeholder="이름을 입력해주세요"
+          className="mt-6"
           value={name}
+          isError={errorMsg.length != 0}
           onChange={(e) => {
             setName(e.target.value);
             setErrorMsg("");
@@ -67,7 +69,9 @@ const ResetPwView = () => {
         {/* 이메일 입력 */}
         <InputBox
           placeholder="이메일을 입력해주세요"
+          className="mt-6"
           value={id}
+          isError={errorMsg.length != 0}
           onChange={(e) => {
             setId(e.target.value);
             setErrorMsg("");
@@ -75,8 +79,8 @@ const ResetPwView = () => {
         />
 
         {/* 에러 메시지 */}
-        {errorMsg && <p className="text-red-500 mt-2 text-center">{errorMsg}</p>}
-      <div className="h-48" />
+        {errorMsg && <p className="mt-3 text-red-500 text-start">{errorMsg}</p>}
+     
         {/* 확인 버튼 */}
         <BottomButtonWrapper>
             <DefaultButton 

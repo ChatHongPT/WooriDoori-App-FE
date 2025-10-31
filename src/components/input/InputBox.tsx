@@ -12,6 +12,8 @@ interface InputBoxProps {
   isReadOnly?: boolean,
   onClick?: React.MouseEventHandler<HTMLInputElement> | undefined,
   className?: string,
+  
+  isError?: boolean, // isError 에러 발생시 true
 }
 
 const InputBox = ({
@@ -27,6 +29,7 @@ const InputBox = ({
   isReadOnly = false,
   onClick,
   className,
+  isError = false,
 }: InputBoxProps) => {
   return (
     <input
@@ -40,7 +43,7 @@ const InputBox = ({
       className={`
         h-[4rem] text-[1.2rem] font-medium
         flex-1 px-4 py-3 w-full rounded-lg border transition outline-none 
-        ${borderColor} ${textColor} ${bgColor} ${focusColor} 
+         ${textColor} ${bgColor} ${focusColor} ${isError ? 'border-[#FF0000]' : `${borderColor}`}
         disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed 
         ${className}
       `}
