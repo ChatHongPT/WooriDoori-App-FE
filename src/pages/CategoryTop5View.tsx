@@ -1,5 +1,5 @@
 import React from "react";
-import "@/styles/bobbleAnimation.css";
+import "@/styles/bubbleAnimation.css";
 import { img } from "@/assets/img";
 import DefaultDiv from "@/components/default/DefaultDiv";
 import { useParams } from "react-router-dom";
