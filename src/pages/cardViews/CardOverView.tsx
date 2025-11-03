@@ -123,12 +123,6 @@ const CardRecommendView: React.FC = () => {
       <div className="flex flex-col h-screen">
         {/* 상단 고정 영역 */}
         <div className="flex-shrink-0 pb-6 bg-white">
-          {/* 헤더 */}
-          <div className="pt-4 pb-6">
-            <h1 className="text-[2rem] font-bold text-black text-center">
-              카드 살펴보기
-            </h1>
-          </div>
           {/* 검색바 */}
           <div className="mb-6">
             <div className="relative">

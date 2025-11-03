@@ -1,9 +1,9 @@
 .bubble-scene {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
-  background: url('../assets/bubbole_bg.png') no-repeat center center;
+  background: url("../assets/bubbole_bg.png") no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -26,7 +26,7 @@
 .bubble {
   position: absolute;
   border-radius: 50%;
-  background: url('../assets/Bubble.png') no-repeat center center;
+  background: url("../assets/Bubble.png") no-repeat center center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,6 @@
   height: 60%;
   object-fit: contain;
 }
-
 
 /* 초기: 아래에서 위로 등장 */
 @keyframes rise {
@@ -77,8 +76,6 @@
 
 /* 자연스러운 흐름을 위해 float 시작을 rise 이후로 지정 */
 .bubble {
-  animation:
-    rise 2s ease-out forwards,
-    float 4s ease-in-out infinite;
+  animation: rise 2s ease-out forwards, float 4s ease-in-out infinite;
   animation-delay: var(--delay, 0s), calc(var(--delay, 0s) + 2s);
 }

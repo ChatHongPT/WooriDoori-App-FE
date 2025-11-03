@@ -1,5 +1,5 @@
 import React from "react";
-import "@/styles/bobbleAnimation.css";
+import "@/styles/bubbleAnimation.css";
 import { img } from "@/assets/img";
 import DefaultDiv from "@/components/default/DefaultDiv";
 import { useParams } from "react-router-dom";
@@ -46,49 +46,49 @@ const CategoryTop5View: React.FC = () => {
       size: 100,
       top: "55%",
       left: "25%",
-      delay: 0.5,
+      delay: 0.15,
     },
      {
       src: null,
       size: 40,
       top: "58%",
       left: "80%",
-      delay: 1,
+      delay: 0.3,
     },
     {
       src:  `${img.doori_face1}`,
       size: 150,
       top: "43%",
       left: "50%",
-      delay: 1.5,
+      delay: 0.4,
     },
      {
       src: null,
       size: 40,
       top: "45%",
       left: "10%",
-      delay: 2,
+      delay: 0.5,
     },
     {
       src:  `${img.doori_face1}`,
       size: 150,
       top: "30%",
       left: "10%",
-      delay: 2.5,
+      delay: 0.6,
     },
      {
       src: null,
       size: 40,
       top: "35%",
       left: "50%",
-      delay: 3,
+      delay: 0.7,
     },
     {
       src:  `${img.doori_face1}`,
       size: 200,
       top: "10%",
       left: "43%",
-      delay: 3.5,
+      delay: 0.8,
     },
   ];
 

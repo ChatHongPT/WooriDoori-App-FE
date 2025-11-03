@@ -24,9 +24,8 @@ const MyPageView: React.FC = () => {
     { title: '소비 내역', icon: '>', path: '/calendar' },
     { title: '카드 관리', icon: '>', path: '/card' },
     { title: '카드 살펴보기', icon: '>', path: '/card-recommend' },
-    { title: '달성도', icon: '>', path: '/goal/achievementHistory' },
+    { title: '목표 관리', icon: '>', path: '/goal/achievementHistory' },
     { title: '목표 수정', icon: '>', path: '/goal/editGoal' },
-    { title: '카테고리별 사용 금액 상세', icon: '>', path: '/report' },
   ];
 
   return (
@@ -69,26 +68,28 @@ const MyPageView: React.FC = () => {
 
       {/* 메뉴 섹션 */}
       <div className="mb-8 w-full">
-        <h2 className="text-[1.6rem] font-bold text-gray-900 mb-10">
-          메뉴
-        </h2>
+        <div className="bg-white border border-gray-200 rounded-[1.6rem] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        {/* 제목 */}
+        <h2 className="text-[1.6rem] font-bold text-gray-900 mb-4">메뉴</h2>
+        <hr className="border-gray-200 mb-4" />
         
         {/* 메뉴 리스트 */}
-        <div className="overflow-hidden bg-white rounded-2xl border border-gray-100 shadow-sm">
-          {menuItems.map((item, index) => (
-            <div
-              key={index}
-              onClick={() => navigate(item.path, { state: { from: "mypage" } })}
-              className="flex justify-between items-center px-6 py-5 transition-all duration-200 cursor-pointer hover:bg-blue-50"
-            >
-              <span className="text-[1.4rem] font-medium text-gray-800">
-                {item.title}
-              </span>
-              <span className="flex items-center">
-                <img src={img.grayCheckRightIcon} alt=">" width={15} />
-              </span>
-            </div>
-          ))}
+        <div className="divide-y divide-gray-100">
+            {menuItems.map((item, index) => (
+              <div
+                key={index}
+                onClick={() => navigate(item.path, { state: { from: 'mypage' } })}
+                className="flex justify-between items-center py-4 cursor-pointer hover:bg-gray-50 rounded-xl transition-colors"
+              >
+                <span className="text-[1.35rem] text-gray-700">{item.title}</span>
+                <img
+                  src={img.grayCheckRightIcon}
+                  alt=">"
+                  className="w-[1.2rem] h-[1.2rem] opacity-60"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </DefaultDiv>

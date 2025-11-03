@@ -78,6 +78,7 @@ import bgImg from './home/main_banner.png';
 
 import stoneIcon from './report/stone.png';
 import copperIcon from './report/copper.png';
+import copperIcon2 from './report/stome2.png';
 import silverIcon from './report/silver.png';
 import goldIcon from './report/gold.png';
 import emeraldIcon from './report/emerald.png';
@@ -110,7 +111,7 @@ export const img ={
     educationIcon, trafficIcon, etcIcon,
     
     doori_favicon,
-    check, fireworkLeft, fireworkRight, scale, gauge, needle,
+    check, fireworkLeft, fireworkRight, scale, gauge, needle, copperIcon2, 
 
     bgImg, 
     stoneIcon, copperIcon, silverIcon, goldIcon, emeraldIcon, scaleIcon, testCard, cardBanner, cardBanner2, cardBanner3, bubble, starbucks, megacoffee, twosomecoffee, doori_bubbole

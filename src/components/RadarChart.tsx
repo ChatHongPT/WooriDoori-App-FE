@@ -18,7 +18,7 @@ interface RadarChartProps {
 
 const RadarChart: React.FC<RadarChartProps> = ({ dataValues = [65, 50, 90, 70] }) => {
   const data = {
-    labels: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    labels: ["목표 달성도", "소비 안전성", "필수/비필수 소비 비율", "절약 지속성"],
     datasets: [
       {
         label: "Example Dataset",
@@ -58,13 +58,17 @@ const RadarChart: React.FC<RadarChartProps> = ({ dataValues = [65, 50, 90, 70] }
           font: {
             size: 12,
           },
+          padding: 20,
         },
         suggestedMin: 0,
         suggestedMax: 100,
+        ticks: {
+          display: false, // 숫자 레이블 숨기기
+        },
       },
     },
     layout: {
-      padding: 20,
+      padding: 10,
     },
   };
 

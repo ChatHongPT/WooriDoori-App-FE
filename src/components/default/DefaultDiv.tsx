@@ -43,7 +43,7 @@ const DefaultDiv = ({
     }
 ) => {
     return (
-        <div className={`border flex flex-col overflow-auto relative min-h-[100vh] h-[100vh] m-auto bg-white font-sans w-full ${isPadding ? 'p-10 pb-[6rem]' : ''}  ${isHome ? 'default-img' : ''} ${className}`} style={{ maxWidth: '400px' }}>
+        <div className={`border flex flex-col overflow-auto relative min-h-[100vh] h-[100vh] m-auto bg-white font-sans w-full ${isPadding ? 'p-10' : ''} ${isBottomNav ? 'pb-[6rem]' : ''}  ${isHome ? 'default-img' : ''} ${className}`} style={{ maxWidth: '400px' }}>
             {
                 isHeader &&
                 <HeaderBar
@@ -59,7 +59,7 @@ const DefaultDiv = ({
                     children={headerChildren}
                 />
             }
-            <div className={`flex-1  ${isHeader ? 'pt-[5rem] pb-[5rem]' : ''}`}>
+            <div className={`flex-1  ${isHeader ? 'pt-[5rem]' : ''}`}>
                 {children}
             </div>
             {isBottomNav && <BottomNav />}
