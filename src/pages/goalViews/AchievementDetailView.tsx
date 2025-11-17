@@ -5,7 +5,9 @@ import BorderBox from "@/components/default/BorderBox";
 import { img } from "@/assets/img";
 import RadarChart from "@/components/RadarChart";
 import ConsumptionGradeGauge from "@/components/Progress/ConsumptionGradeGauge";
+import ChatModal from "@/components/modal/ChatModal";
 import "@/styles/goal/gaugePointerAnimations.css";
+import "@/styles/home/animations.css";
 
 // ✅ 두리 등급별 이미지
 import dooriCool from "@/assets/doori/doori_cool.png";
@@ -113,6 +115,7 @@ export default function AchievementDetailView() {
   const foundIndex = mockHistory.findIndex((item) => item.month === data?.month);
   const initialIndex = foundIndex !== -1 ? foundIndex : 0;
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
   // ✅ 현재 데이터
   const currentData = mockHistory[currentIndex];
@@ -190,8 +193,9 @@ export default function AchievementDetailView() {
       onBack={handleBack}
       onClose={handleClose}
       isMainTitle={false}
+      isBottomNav={true}
     >
-      <div className="flex flex-col gap-6 px-4 pt-4 pb-0 h-full">
+      <div className="flex relative flex-col gap-6 px-4 pt-4 pb-24 h-full">
         {/* ✅ 월 선택 (헤더 바로 아래) */}
         <div className="flex items-center justify-center gap-4 text-gray-600 text-[1.4rem] font-semibold">
           <button
@@ -231,7 +235,9 @@ export default function AchievementDetailView() {
           </div>
 
         {/* ✅ 신용등급 그래프 (공통 컴포넌트 사용) */}
-        <ConsumptionGradeGauge key={`${currentIndex}-${grade}`} userName={userName} grade={grade} />
+        <BorderBox flex="" padding="p-0" borderRadius="rounded-2xl" borderColor="border-transparent" shadow="shadow-none">
+          <ConsumptionGradeGauge key={`${currentIndex}-${grade}`} userName={userName} grade={grade} />
+        </BorderBox>
 
         {/* ✅ 한달 소비 TOP 4 (2x2 그리드) */}
         <div className="mt-6 mb-8">
@@ -259,46 +265,38 @@ export default function AchievementDetailView() {
 
         {/* ✅ Radar 차트 카드 */}
         {shouldShowScore && (
-          <BorderBox padding="p-5" borderRadius="rounded-2xl" borderColor="border-gray-200" shadow="shadow-sm">
-            <div className="w-full h-[28rem] flex items-center justify-center">
-              <RadarChart dataValues={[achievementScorePercent, stabilityScorePercent, ratioScorePercent, continuityScorePercent]} />
-            </div>
-          </BorderBox>
+          <div className="mb-24">
+            <BorderBox padding="p-5" borderRadius="rounded-2xl" borderColor="border-gray-200" shadow="shadow-sm" flex="">
+              <div className="w-full h-[28rem] flex items-center justify-center">
+                <RadarChart dataValues={[achievementScorePercent, stabilityScorePercent, ratioScorePercent, continuityScorePercent]} />
+              </div>
+            </BorderBox>
+          </div>
         )}
 
-          <div className="flex gap-4 items-end">
-            {/* 폼: 왼쪽 */}
-          <BorderBox
-            padding="p-6"
-            borderRadius="rounded-2xl"
-            borderColor={gradeStyle.border}
-            bgColor="bg-[#FFFEFB]"
-            flex="flex-1"
-            shadow=""
-          >
-            <div className="min-w-[13rem] min-h-[18rem] flex flex-col" style={{
-              backgroundImage: 'repeating-linear-gradient(transparent, transparent 28px, rgba(16,24,40,0.12) 29px)',
-              backgroundSize: '100% 29px',
-              backgroundPositionY: '12px',
-            }}>
-              <p className="text-[1.4rem] font-medium text-left px-1 mb-2" style={{ 
-                lineHeight: '29px',
-                paddingTop: '12px'
-              }}>두리의 한마디</p>
-              <p className="text-[1.2rem] font-light text-left whitespace-pre-wrap break-words flex-1 overflow-y-auto px-1" style={{ 
-                lineHeight: '29px'
-              }}>
-                • {currentData.comment}
-              </p>
-            </div>
-          </BorderBox>
-          <img
-            src={gradeStyle.img}
-            alt="두리 캐릭터"
-            className="w-[14.5rem] h-[18.5rem] object-contain select-none pointer-events-none shrink-0"
-          />
-        </div>
+        {/* 최근 기록(첫 번째 항목)에만 챗봇 버튼 표시 */}
+        {currentIndex === 0 && (
+          <div className="flex sticky right-6 bottom-24 z-40 justify-end">
+            <button
+              onClick={() => setIsChatModalOpen(true)}
+              className="flex relative justify-center items-center w-20 h-20 bg-white rounded-full border border-black shadow-lg transition-colors hover:bg-green-600"
+              aria-label="채팅 상담"
+            >
+              <img
+                src={img.doori_favicon}
+                alt="두리"
+                className="object-contain w-14 h-14"
+              />
+              {/* 느낌표 배지 */}
+              <div className="flex absolute -top-1 -right-1 justify-center items-center w-6 h-6 bg-red-500 rounded-full border border-black border-white attention-pulse" >
+                <span className="text-white text-[1rem] font-bold attention-shake">!</span>
+              </div>
+            </button>
+          </div>
+        )}
       </div>
+      {/* 채팅 모달 */}
+      <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
     </DefaultDiv>
   );
 }
