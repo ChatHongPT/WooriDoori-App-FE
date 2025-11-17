@@ -6,11 +6,14 @@ import BorderBox from "@/components/default/BorderBox";
 import DefaultDiv from "@/components/default/DefaultDiv"
 import MainBanner from "@/components/home/MainBanner";
 import ProgressDonet from "@/components/Progress/ProgressDonet";
+import NotificationBanner from "@/components/noti/NotificationBanner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useNotificationStore } from "@/stores/useNotificationStore";
 
 const HomeView = () => {
   const navigate = useNavigate();
+  const { notifications } = useNotificationStore();
 
   // localStorage에서 사용자 정보 가져오기
   const getUserName = () => {
@@ -78,6 +81,26 @@ const HomeView = () => {
           <p className="mt-0.5 text-[1.2rem] text-[#858585]">오늘의 소비내역에 대해 안내해드릴께요!</p>
         </div>
 
+        {/* 알림 배너 - 읽지 않은 알림만 표시 */}
+        {(() => {
+          const unreadNotifications = notifications.filter(noti => !noti.isRead);
+          return unreadNotifications.length > 0 && (
+            <div className="mt-6">
+              {unreadNotifications.slice(0, 1).map((notification) => (
+                <NotificationBanner
+                  key={notification.id}
+                  notificationId={notification.id}
+                  title={notification.title}
+                  message={notification.message}
+                  type={notification.type}
+                  actionUrl={notification.actionUrl}
+                  month={notification.month}
+                />
+              ))}
+            </div>
+          );
+        })()}
+
         {/* 메인 배너 (달성도 배너 → 달성도 페이지 이동) */}
         <div
           onClick={() => navigate('/goal/achievementHistory', { state: { from: "home" } })}
@@ -125,8 +148,8 @@ const HomeView = () => {
             {
               topCategoryList.map((element, index) => {
                 return (
-                  <div onClick={() => navigate(`/category-top5/${index}`)} className="cursor-pointer">
-                    <div key={index} className={`flex items-center gap-6 ${index != topCategoryList.length - 1 ? 'border-b border-gray-100' : ''}`}>
+                  <div key={index} onClick={() => navigate(`/category-top5/${index}`)} className="cursor-pointer">
+                    <div className={`flex items-center gap-6 ${index != topCategoryList.length - 1 ? 'border-b border-gray-100' : ''}`}>
                       <p className={`text-[1.5rem] font-bold pl-4
                         ${index == 0 ? 'text-[#FF0000]' : index == topCategoryList.length - 1 ? 'text-[#138FEF]' : 'text-[#4A4A4A]'}`}>TOP {index + 1}</p>
                       <ConsumptionCategory amount={element.amount} iconSrc={element.iconSrc} label={element.label} bgColor={element.bgColor} percentage="" isBorder={false} />

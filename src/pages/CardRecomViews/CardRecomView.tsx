@@ -2,11 +2,13 @@
 import '@/styles/report/animations.css'
 import Card from "@/components/card/Card";
 import ReportLayout from "@/components/report/ReportLayout";
+import { useNavigate } from "react-router-dom";
 import CardTabs from "./CardTabs";
 import { img } from "@/assets/img";
 import CardRankItem from '@/components/card/CardRankItem';
 
 const CardRecomView = () => {
+  const navigate = useNavigate();
   const name = "석기";
 
   const cardList = [
@@ -41,9 +43,13 @@ const CardRecomView = () => {
 
   ];
 
+  const onClick = () => {
+    navigate("/month-achive");
+  };
 
   return (
-    <ReportLayout mainText={`${name}님 소비에 딱 맞는 카드`} showClose={false}  onBack={()=>window.history.back()} buttonText={"확인"}>
+    <ReportLayout mainText={`${name}님 소비에 딱 맞는 카드`} showClose={false}  onBack={()=>window.history.back()} buttonText={"확인"} 
+      onButtonClick={ onClick}>
       <div className='w-full'>
         <p className="text-[1.2rem] text-[#A39C9C] -mt-5">소비패턴에 맞는카드{cardList.length}개를 가져와봤어요</p>
         <CardTabs onChange={(value) => { console.log(value) }} />

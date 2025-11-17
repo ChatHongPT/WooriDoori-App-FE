@@ -22,6 +22,7 @@ import travelIcon from './travel.png';
 import transferIcon from './transfer.png';
 import residenceIcon from './residence.png';
 import martIcon from './mart.png';
+import drinkIcon from './drink.png';
 import diaryIcon from './diary.svg';
 import phoneIcon from './phone.png';
 
@@ -107,7 +108,7 @@ export const img ={
     wooridoori_logo, woori_logo, alarmOn, alarmOff,
     
     searchIcon, wooriCard,DeleteIcon, EditIcon, grayCheckRightIcon, settingIcon, diaryIcon, 
-    hospitalIcon, phoneIcon, foodIcon, travelIcon, transferIcon, residenceIcon, martIcon, entertainmentIcon, shoppingIcon,
+    hospitalIcon, phoneIcon, foodIcon, travelIcon, transferIcon, residenceIcon, martIcon, drinkIcon, entertainmentIcon, shoppingIcon,
     educationIcon, trafficIcon, etcIcon,
     
     doori_favicon,
