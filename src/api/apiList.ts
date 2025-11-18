@@ -102,4 +102,12 @@ export const apiList = {
       };
     }
   },
+
+// 목표 API
+goal: {
+  setGoal: (payload: any) => {
+    console.log("📡 보내는 payload:", payload);
+    return axiosInstance.put("/goal/setgoal", payload);
+  },
+},
 };
