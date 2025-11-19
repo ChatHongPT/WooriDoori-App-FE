@@ -3,7 +3,7 @@ import { handleApiError } from "./handleApiError";
 import { useCookieManager } from "@/hooks/useCookieManager";
 import { apiList } from "./apiList";
 
-//const { getCookies, setCookies, removeCookies } = useCookieManager();
+const { getCookies, setCookies, removeCookies } = useCookieManager();
 
 
 const axiosInstance = axios.create({
@@ -33,34 +33,18 @@ const processQueue = (error: AxiosError | null, token: string | null = null) => 
   failedQueue = [];
 };
 
-// // 요청 인터셉터
-// axiosInstance.interceptors.request.use((config) => {
-//   const { accessToken: token } = getCookies();
-//   if (token) config.headers.Authorization = `Bearer ${token}`;
-//   return config;
-// });
-
+// 요청 인터셉터
 axiosInstance.interceptors.request.use((config) => {
-  // 호출할 때마다 최신 쿠키 가져오기
-  const { getCookies } = useCookieManager();
   const { accessToken: token } = getCookies();
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
-
 
 // 응답 인터셉터
 axiosInstance.interceptors.response.use(
   (response) => response, // 응답은 그대로 반환
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-
-    const { getCookies, setCookies, removeCookies } = useCookieManager();
-    const { accessToken, refreshToken } = getCookies();
     
     // 401 에러이고, reissue API가 아니고, 이미 재시도한 요청이 아닐 때
     if (
@@ -88,7 +72,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      //const { accessToken, refreshToken } = getCookies();
+      const { accessToken, refreshToken } = getCookies();
 
       // refreshToken이 없으면 로그인 페이지로 이동
       if (!refreshToken || !accessToken) {

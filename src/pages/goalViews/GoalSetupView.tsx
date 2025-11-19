@@ -108,6 +108,7 @@ const submitGoalData = async () => {
     if (step < 5) {
       setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5);
     }
+    if (step < 5) setStep((prev) => (prev + 1) as 1 | 2 | 3 | 4 | 5);
   };
 
   const handleRestart = () => {
