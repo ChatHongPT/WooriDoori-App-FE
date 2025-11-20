@@ -79,24 +79,25 @@ export default function AchievementDetailView() {
   const getCategoryInfo = (categoryName: string) => {
     const categoryMap: Record<string, { icon: string; color: string }> = {
       'FOOD': { icon: img.foodIcon, color: "#FF715B" }, // DTO의 키값에 맞게 수정 필요
-      'TRANSPORT': { icon: img.trafficIcon, color: "#34D1BF" },
-      'CONVENIENCE': { icon: img.martIcon, color: "#FFC456" },
+      'CAFE': { icon: img.coffeeIcon, color: "#FF715B" },
+      'TRANSPORTATION': { icon: img.trafficIcon, color: "#34D1BF" },
+      'CONVENIENCE_STORE': { icon: img.martIcon, color: "#FFC456" },
       'SHOPPING': { icon: img.shoppingIcon, color: "#345BD1" },
-      'RESIDENCE': { icon: img.residenceIcon, color: "#FFF1D6" },
+      'HOUSING': { icon: img.residenceIcon, color: "#FFF1D6" },
       'HOSPITAL': { icon: img.hospitalIcon, color: "#31BB66" },
       'TRANSFER': { icon: img.transferIcon, color: "#FFF495" },
-      'ENTERTAINMENT': { icon: img.entertainmentIcon, color: "#FF715B" },
-      'PHONE': { icon: img.phoneIcon, color: "#FFFFFF" },
+      'ALCOHOL_ENTERTAINMENT': { icon: img.entertainmentIcon, color: "#FF715B" },
+      'TELECOM': { icon: img.phoneIcon, color: "#FFFFFF" },
       'EDUCATION': { icon: img.educationIcon, color: "#969191" },
       'ETC': { icon: img.etcIcon, color: "#E4EAF0" },
       // 💡 DTO의 CategoryType에 맞춰 키 값을 대문자로 변경했습니다.
     };
     // UI 표시용 한글 이름 매핑 (CategoryType이 실제 DB/DTO 키라고 가정)
     const displayNames: Record<string, string> = {
-        'FOOD': '식비', 'TRANSPORT': '교통/자동차', 'CONVENIENCE': '편의점',
-        'SHOPPING': '쇼핑', 'RESIDENCE': '주거', 'HOSPITAL': '병원',
-        'TRANSFER': '이체', 'ENTERTAINMENT': '술/유흥', 'PHONE': '통신',
-        'EDUCATION': '교육', 'ETC': '기타',
+        'FOOD': '식비', 'TRANSPORTATION': '교통/자동차', 'CONVENIENCE_STORE': '편의점',
+        'SHOPPING': '쇼핑', 'HOUSING': '주거', 'HOSPITAL': '병원',
+        'TRANSFER': '이체', 'ALCOHOL_ENTERTAINMENT': '술/유흥', 'TELECOM': '통신',
+        'EDUCATION': '교육', 'ETC': '기타', 'CAFE': '커피',
     };
     const info = categoryMap[categoryName] || { icon: img.etcIcon, color: "#E4EAF0" };
     return { ...info, displayName: displayNames[categoryName] || categoryName };
