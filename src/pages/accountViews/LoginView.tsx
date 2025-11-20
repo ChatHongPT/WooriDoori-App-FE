@@ -60,6 +60,8 @@ const LoginView = () => {
       if (accessToken && refreshToken) {
         try {
           setCookies(accessToken, refreshToken);
+          // 로그인 시 카드 데이터 초기화
+          localStorage.setItem('userCards', JSON.stringify([]));
           console.log("로그인 성공!");
           
           setShowSuccess(true);
