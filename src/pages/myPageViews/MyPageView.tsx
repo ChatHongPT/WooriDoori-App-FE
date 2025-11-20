@@ -6,22 +6,13 @@ import SuccessModal from '@/components/modal/SuccessModal';
 import { img } from '@/assets/img';
 import axiosInstance from "@/api/axiosInstance";
 import { useCookieManager } from "@/hooks/useCookieManager";
-
+import { useUserStore } from "@/stores/useUserStore";
 
 const MyPageView: React.FC = () => {
   const navigate = useNavigate();
 
-  // localStorage에서 사용자 정보 가져오기
-  const getUserName = () => {
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      const user = JSON.parse(userInfo);
-      return user.name || '사용자';
-    }
-    return '석기'; // 기본값
-  };
-
-  const userName = getUserName();
+  const { userInfo, isLoggedIn } = useUserStore();
+  const userName = isLoggedIn && userInfo?.name ? userInfo.name : "사용자";
 
   // 모달 상태
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
