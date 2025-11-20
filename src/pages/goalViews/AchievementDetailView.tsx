@@ -27,15 +27,15 @@ interface AchievementDetailDto {
 // 💡 HistoryView에서 전달받는 항목의 타입 정의 (날짜 포함)
 interface HistoryItem {
   goalStartDate: string; // "YYYY-MM-DD" 형식 (날짜 정보는 이 필드에서 추출)
-  // ... HistoryView에서 전달하는 다른 필드가 있다면 여기에 추가 ...
 }
 
 
 export default function AchievementDetailView() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  
 
-  const historyList = state?.historyList as HistoryItem[] | undefined; // 💡 1. 전체 리스트를 받습니다.
+  const historyList = state?.historyList as HistoryItem[] | undefined; // 1. 전체 달성도 리스트를 받습니다.
   const initialYear = state?.year as number;
   const initialMonth = state?.month as number;
   const from = state?.from || "home";
@@ -95,18 +95,21 @@ export default function AchievementDetailView() {
 
   // 8. 이전/다음 데이터 기록으로 이동하는 로직 (인덱스 기반)
   const handleNavigateMonth = (direction: "prev" | "next") => {
+    console.log(direction, !historyList || currentIndex, currentIndex)
     if (!historyList || currentIndex === -1) return;
 
     // HistoryList가 일반적으로 최신순(Index 0)으로 정렬되었다고 가정
     if (direction === "prev") {
       // '이전 달' 버튼 (과거 기록으로 이동 -> 인덱스 증가)
-      if (currentIndex < historyList.length - 1) {
-        setCurrentIndex(currentIndex + 1);
+      if (currentIndex >= historyList.length - 1) {
+        setCurrentIndex(currentIndex - 1);
       }
     } else {
+      console.log("12345678345678")
       // '다음 달' 버튼 (최신 기록으로 이동 -> 인덱스 감소)
-      if (currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
+      if (currentIndex <= 0) {
+        console.log("+*******")
+        setCurrentIndex(currentIndex + 1);
       }
     }
   };
@@ -357,8 +360,8 @@ export default function AchievementDetailView() {
         <div className="flex items-center justify-center gap-4 text-gray-600 text-[1.4rem] font-semibold">
           <button
             onClick={() => handleNavigateMonth("prev")} // 인덱스 증가 (과거 기록)
-            disabled={isLastItem}
-            className={`transition ${isLastItem ? "text-gray-300 cursor-default" : "hover:text-black"}`}
+            disabled={isFirstItem}
+            className={`transition ${isFirstItem ? "text-gray-300 cursor-default" : "hover:text-black"}`}
             aria-label="이전 기록"
           >
             ◀
@@ -366,8 +369,8 @@ export default function AchievementDetailView() {
           <span className="text-[1.6rem] font-bold text-gray-800">{currentMonthDisplay}</span>
           <button
             onClick={() => handleNavigateMonth("next")} // 인덱스 감소 (최신 기록)
-            disabled={isFirstItem}
-            className={`transition ${isFirstItem ? "text-gray-300 cursor-default" : "hover:text-black"}`}
+            disabled={isLastItem}
+            className={`transition ${isLastItem ? "text-gray-300 cursor-default" : "hover:text-black"}`}
             aria-label="다음 기록"
           >
             ▶
@@ -379,13 +382,13 @@ export default function AchievementDetailView() {
         {/* ✅ 상단: 이번달 목표 / 이번달 달성 */}
           <div className="flex gap-10 justify-center items-center text-center">
             <div className="flex flex-col">
-              <span className="text-gray-500 text-[1.3rem]">목표 금액</span>
+              <span className="text-gray-500 text-[1.3rem]">이번 달 목표</span>
               {/* goalAmount는 만원 단위로 가정하고 10000을 곱했습니다. */}
               <span className="font-extrabold text-[1.6rem]">₩{fmt(goalAmount*10000)}</span>
             </div>
             <span className="text-[2rem] font-bold text-gray-400 mt-6">+</span>
             <div className="flex flex-col">
-              <span className="text-gray-500 text-[1.3rem]">달성률</span>
+              <span className="text-gray-500 text-[1.3rem]">이번 달 달성</span>
               <span className="font-extrabold text-[1.6rem]">{achievementRate}%</span>
             </div>
           </div>

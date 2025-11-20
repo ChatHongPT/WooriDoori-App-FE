@@ -6,13 +6,6 @@ import DefaultButton from "@/components/button/DefaultButton";
 import BottomButtonWrapper from "@/components/button/BottomButtonWrapper";
 import BenefitChart from "@/components/chart/BenefitChart";
 
-// type Achievement = {
-//   month: string;
-//   goal: string;
-//   score: number;
-//   percent: number;
-// };
-
 export default function AchievementHistoryView() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,18 +16,11 @@ export default function AchievementHistoryView() {
     if (from === "mypage") navigate("/mypage");
     else navigate("/home");
   };
-
-  // ✅ 더미 데이터 (임시 테스트용)
-  // const mockHistory: Achievement[] = [
-  //   { month: "2025.04", goal: "10,000만원 쓰기", percent: 80, score: 20 },
-  //   { month: "2025.03", goal: "1,000만원 쓰기", percent: 40, score: 60 },
-  //   { month: "2025.02", goal: "300만원 쓰기", percent: 25, score: 75 },
-  // ];
-  // 백엔드 연동 시 setHistoryList(mockHistory); 에서 교체해야해서 했음
+  
 
   const [historyList, setHistoryList] = useState<any[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
-  const selectedItem = selected !== null ? historyList[selected] : null;
+  //const selectedItem = selected !== null ? historyList[selected] : null;
  // 컴포넌트 마운트 시 데이터 로드
   useEffect(() => {
     apiList.goalhistory.getGoalHistory()
@@ -57,14 +43,8 @@ export default function AchievementHistoryView() {
         month: `${monthNum}월`,
         benefit: item.goalScore ?? 0,
       };
-      // // month에서 월 추출 (예: "2025.04" -> "4월")
-        // const monthMatch = item.month.match(/\.(\d+)$/);
-        // const monthNum = monthMatch ? parseInt(monthMatch[1]) : 1;
-        // return {
-        //   month: `${monthNum}월`,
-        //   benefit: item.score, // score를 benefit으로 사용
-        // };
-      }).reverse() // 최신순으로 정렬
+  
+      })
     : [];
 
   // 사용자 이름 가져오기
@@ -150,7 +130,7 @@ export default function AchievementHistoryView() {
   text="목표관리 확인하기"
   onClick={() => {
     const selectedItem = historyList[selected];
-    const dateString = selectedItem.goalStartDate;
+    
     // year, month 숫자로 변환
     const year = Number(selectedItem.goalStartDate.slice(0, 4));
     const month = Number(selectedItem.goalStartDate.slice(5, 7));
