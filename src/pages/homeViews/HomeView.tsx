@@ -25,6 +25,18 @@ interface CardRecommendItem {
   cardBannerUrl?: string | null;
 }
 
+interface CardRecommendApiResponse {
+  id: number;
+  cardName: string;
+  cardUrl: string;
+  cardBannerUrl: string;
+  cardBenef: string;
+  cardType: 'CREDIT' | 'CHECK';
+  cardSvc: string;
+  annualFee1: string;
+  annualFee2: string;
+}
+
 interface MainResponse {
   fullDate?: number;
   duringDate?: number;
@@ -73,6 +85,7 @@ const HomeView = () => {
   const { notifications } = useNotificationStore();
   const { userInfo, isLoggedIn } = useUserStore();
   const [homeData, setHomeData] = useState<MainResponse | null>(null);
+  const [cardRecommendData, setCardRecommendData] = useState<CardRecommendApiResponse[]>([]);
 
   // 사용자 이름 가져오기
   const userName = isLoggedIn && userInfo?.name ? userInfo.name : null;
@@ -113,9 +126,10 @@ const HomeView = () => {
     percentage:
       categoryTotalValue > 0 ? `${Math.round((cat.value / categoryTotalValue) * 100)}%` : "-",
   }));
+  // 카드 추천 API에서 받은 배너 URL 사용
   const cardBannerItems =
-    homeData?.cardRecommend && homeData.cardRecommend.length > 0
-      ? homeData.cardRecommend.map((card, index) => ({
+    cardRecommendData.length > 0
+      ? cardRecommendData.map((card, index) => ({
           url: "",
           src: card.cardBannerUrl || DEFAULT_CARD_BANNERS[index % DEFAULT_CARD_BANNERS.length].src,
         }))
@@ -138,6 +152,25 @@ const HomeView = () => {
       }
     };
     fetchMainData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // 카드 추천 API 호출
+  useEffect(() => {
+    let isMounted = true;
+    const fetchCardRecommend = async () => {
+      try {
+        const result = await apiList.cardRecommend();
+        if (isMounted && result?.success && result.data?.cards) {
+          setCardRecommendData(result.data.cards || []);
+        }
+      } catch (error) {
+        console.error("카드 추천 조회 실패:", error);
+      }
+    };
+    fetchCardRecommend();
     return () => {
       isMounted = false;
     };

@@ -22,14 +22,14 @@ const CardRecommendView: React.FC = () => {
   const [cards, setCards] = useState<CardItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 카드 목록 조회
+  // 카드 목록 API 호출
   useEffect(() => {
-    const fetchCards = async () => {
+    const fetchCardList = async () => {
       setIsLoading(true);
       try {
         const result = await apiList.card.getCardList();
         if (result?.success && result.data) {
-          setCards(result.data);
+          setCards(result.data || []);
         } else {
           console.error('카드 목록 조회 실패:', result?.resultMsg);
         }
@@ -40,19 +40,15 @@ const CardRecommendView: React.FC = () => {
       }
     };
 
-    fetchCards();
+    fetchCardList();
   }, []);
 
   // 필터링된 카드 목록
   const filteredCards = cards.filter(card => {
-    // cardType으로 필터링
     const matchesType = selectedFilter === '체크카드' 
       ? card.cardType === 'CHECK' 
       : card.cardType === 'CREDIT';
-    
-    // 검색어로 필터링
     const matchesSearch = card.cardName.toLowerCase().includes(searchQuery.toLowerCase());
-    
     return matchesType && matchesSearch;
   });
 
@@ -161,9 +157,9 @@ const CardRecommendView: React.FC = () => {
                       <span className="px-3 py-1 rounded-full text-[0.9rem] font-medium bg-green-100 text-green-600">
                         {card.cardType === 'CHECK' ? '#체크카드' : '#신용카드'}
                       </span>
-                      {card.cardSvc && (
+                      {card.cardSvc === 'YES' && (
                         <span className="px-3 py-1 rounded-full text-[0.9rem] font-medium bg-blue-100 text-blue-600">
-                          #{card.cardSvc}
+                          #해외겸용
                         </span>
                       )}
                     </div>
