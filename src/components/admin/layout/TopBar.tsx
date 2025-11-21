@@ -36,8 +36,6 @@ export function TopBar({ onMenuClick, title, titleIcon: TitleIcon, showActionBut
     theme: '테마',
     darkMode: '다크 모드',
     lightMode: '라이트 모드',
-    notifications: '알림',
-    emailNotifications: '이메일 알림 받기',
     cancel: '취소',
     save: '저장',
   }
@@ -117,16 +115,6 @@ export function TopBar({ onMenuClick, title, titleIcon: TitleIcon, showActionBut
                   }`}
                 >
                   {t.lightMode}
-                </button>
-              </div>
-            </div>
-            {/* 언어 선택 제거 (한국어 고정) */}
-            <div className="grid gap-3">
-              <Label className="text-gray-700 dark:text-gray-300">{t.notifications}</Label>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">{t.emailNotifications}</span>
-                <button className="relative w-11 h-6 bg-gray-200 dark:bg-[#1a1a1a] rounded-full border border-gray-300 dark:border-[#2a2a2a]">
-                  <span className="absolute left-1 top-1 w-4 h-4 bg-gray-400 dark:bg-gray-600 rounded-full transition-transform"></span>
                 </button>
               </div>
             </div>
