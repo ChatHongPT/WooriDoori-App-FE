@@ -56,7 +56,7 @@ const ReportView = () => {
       'ETC': { icon: img.etcIcon, color: "#E4EAF0" },
     };
     const displayNames: Record<string, string> = {
-        'FOOD': '식비', 'CAFE': '카페', 'TRANSPORTATION': '교통/자동차', 'CONVENIENCE_STORE': '편의점',
+        'FOOD': '식비', 'CAFE': '카페', 'TRANSPORTATION': '교통/차량', 'CONVENIENCE_STORE': '편의점',
         'SHOPPING': '쇼핑', 'TRAVEL': '여행', 'HOUSING': '주거', 'HOSPITAL': '병원',
         'TRANSFER': '이체', 'ALCOHOL_ENTERTAINMENT': '주류/유흥', 'TELECOM': '통신',
         'EDUCATION': '교육', 'ETC': '기타',  // DTO 키값에 맞춰 추가
