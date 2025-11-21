@@ -10,8 +10,10 @@ import { useNavigate } from "react-router-dom";
 import { useApi } from "@/hooks/useApi";
 import { apiList } from "@/api/apiList";
 
+
 const ResetPwView = () => {
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -23,28 +25,31 @@ const ResetPwView = () => {
   const isFormValid = name.trim().length > 0 && emailRegex.test(id.trim());
 
   const handleConfirm = async () => {
-    if (!emailRegex.test(id.trim())) {
+    if (!isFormValid) {
       setErrorMsg("유효한 이메일 주소를 입력해주세요.");
       return;
     }
 
-    if (!name.trim()) {
-      setErrorMsg("이름을 입력해주세요.");
-      return;
-    }
+    try {
+      // 🔥 PATCH /auth/genPw 요청 (임시 비밀번호 발급)
+      await axiosInstance.patch("/auth/genPw", {
+        name,
+        id,
+      });
 
-    setIsLoading(true);
-    setErrorMsg("");
+      // 성공 → newpw 페이지로 이동
+      navigate("/newpw", { state: { id } });
 
-    // 임시 비밀번호 발급 API 호출
-    const result = await requestTemporaryPasswordApi.call(id.trim(), name.trim());
-    setIsLoading(false);
+    } catch (error: any) {
+      console.error("임시 비밀번호 발급 오류:", error);
 
-    if (result?.success) {
-      // 성공 시 비밀번호 변경 페이지로 이동 (memberId를 URL 파라미터로 전달)
-      navigate(`/newpw?id=${encodeURIComponent(id.trim())}`);
-    } else {
-      setErrorMsg(result?.resultMsg || "임시 비밀번호 발급에 실패했습니다.");
+      if (error.response?.status === 404) {
+        setErrorMsg("해당 정보의 사용자를 찾을 수 없습니다.");
+      } else if (error.response?.status === 403) {
+        setErrorMsg("비활성화된 계정입니다.");
+      } else {
+        setErrorMsg("임시 비밀번호 발급 중 오류가 발생했습니다.");
+      }
     }
   };
 
@@ -73,7 +78,7 @@ const ResetPwView = () => {
           임시 비밀번호를 발급받을 계정을 입력해주세요
         </h3>
 
-      <div className="h-8" />
+        <div className="h-8" />
         <InputBox
           placeholder="이름을 입력해주세요"
           className="mt-6"
@@ -99,14 +104,14 @@ const ResetPwView = () => {
 
         {/* 에러 메시지 */}
         {errorMsg && <p className="mt-3 text-red-500 text-start">{errorMsg}</p>}
-     
+
         {/* 확인 버튼 */}
         <BottomButtonWrapper>
-            <DefaultButton 
-              text={isLoading ? "처리 중..." : "확인"}
-              disabled={!isFormValid || isLoading}
-              onClick={handleConfirm} 
-            />
+          <DefaultButton
+            text="확인"
+            disabled={!isFormValid}
+            onClick={handleConfirm}
+          />
         </BottomButtonWrapper>
       </div>
     </DefaultDiv>
