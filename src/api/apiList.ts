@@ -336,10 +336,10 @@ goal: {
       .then(res => res.data.resultData),
 },
 
-  goaldashboard: {
-    getGoalDashboard: () =>
+  goalreport: {
+    getGoalReport: () =>
     axiosInstance
-      .get(`/goal/dashboard`)
+      .get(`/goal/report`)
       .then(res => res.data.resultData),
 },
 

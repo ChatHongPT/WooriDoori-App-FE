@@ -9,16 +9,12 @@ import FallingRockScoreView from './FallingRockScoreView';
 import { apiList } from "@/api/apiList";
 import { useUserStore } from "@/stores/useUserStore";
 
-// 백엔드 DTO (DashboardResponseDto) 기반 TypeScript 인터페이스 정의
-interface AchievementDetailDto {
-  goalAmount: number;        // 이번 달 목표 금액
-  achievementRate: number;   // 달성률 (0~100)
-  achievementScore: number;  // 목표 달성 점수
-  stabilityScore: number;    
-  ratioScore: number;        
-  continuityScore: number;   
-  topCategorySpending: Record<string, number>; // 카테고리별 소비
-  comment?: string;
+// 백엔드 DTO (ReportResponseDto) 기반 TypeScript 인터페이스 정의
+interface ReportDto {
+  goalAmount: number;                     // 이번 달 목표 금액
+  actualSpending: number;                 // 실제 지출
+  goalScore: number;                       // 목표 점수
+  categorySpending: Record<string, number>; // 카테고리별 소비
 }
 
 const ReportView = () => {
@@ -28,20 +24,62 @@ const ReportView = () => {
 
   const [pageNum, setPageNum] = useState(1);
   const [title, setTitle] = useState("");
-
   const [month, setMonth] = useState<number | null>(null);
-  const [reportData, setReportData] = useState<AchievementDetailDto | null>(null);
+  const [reportData, setReportData] = useState<ReportDto | null>(null);
 
   // ===================== 페이지별 타이틀 =====================
   const getTitle = (page: number) => {
     const titleMap: Record<number, string> = {
       1: `${userName}님의 소비습관 점수는 ?!`,
       2: `${userName}님의 한 달 동안\n전체 소비내역을 분석해봤어요`,
-      3: `${userName}님의 한 달 동안\n소비한 카테고리를 보여드릴게요`
+      3: `${userName}님의 한 달 동안\n소비한 카테고리를 보여드릴게요`,
     };
     return titleMap[page] || "";
   };
 
+  // ===================== 카테고리 매핑 =====================
+  // ✅ 카테고리 매핑 함수 (유지)
+  const getCategoryInfo = (categoryName: string) => {
+    const categoryMap: Record<string, { icon: string; color: string }> = {
+      'FOOD': { icon: img.foodIcon, color: "#FF715B" },
+      'CAFE': { icon: img.coffeeIcon, color: "#d1a234ff" },
+      'TRANSPORTATION': { icon: img.trafficIcon, color: "#34D1BF" },
+      'CONVENIENCE_STORE': { icon: img.martIcon, color: "#FFC456" },
+      'SHOPPING': { icon: img.shoppingIcon, color: "#345BD1" },
+      'TRAVEL': { icon: img.travelIcon, color: "#d134c7ff" },
+      'HOUSING': { icon: img.residenceIcon, color: "#FFF1D6" },
+      'HOSPITAL': { icon: img.hospitalIcon, color: "#31BB66" },
+      'TRANSFER': { icon: img.transferIcon, color: "#FFF495" },
+      'ALCOHOL_ENTERTAINMENT': { icon: img.entertainmentIcon, color: "#FF715B" },
+      'TELECOM': { icon: img.phoneIcon, color: "#FFFFFF" },
+      'EDUCATION': { icon: img.educationIcon, color: "#969191" },
+      'ETC': { icon: img.etcIcon, color: "#E4EAF0" },
+    };
+    const displayNames: Record<string, string> = {
+        'FOOD': '식비', 'CAFE': '카페', 'TRANSPORTATION': '교통/자동차', 'CONVENIENCE_STORE': '편의점',
+        'SHOPPING': '쇼핑', 'TRAVEL': '여행', 'HOUSING': '주거', 'HOSPITAL': '병원',
+        'TRANSFER': '이체', 'ALCOHOL_ENTERTAINMENT': '주류/유흥', 'TELECOM': '통신',
+        'EDUCATION': '교육', 'ETC': '기타',  // DTO 키값에 맞춰 추가
+    };
+    const info = categoryMap[categoryName] || { icon: img.etcIcon, color: "#E4EAF0" };
+    return { ...info, displayName: displayNames[categoryName] || categoryName };
+  };
+
+  // ===================== DTO → categoriesList 변환 =====================
+  const convertToCategoriesList = (dto: ReportDto) => {
+    if (!dto?.categorySpending) return [];
+
+    const categoryObj = dto.categorySpending;
+    const totalAmount = Object.values(categoryObj).reduce((acc, val) => acc + val, 0);
+
+    return Object.entries(categoryObj).map(([categoryName, amount]) => {
+      const { icon, color, displayName } = getCategoryInfo(categoryName);
+      const percent = totalAmount === 0 ? "0%" : ((amount / totalAmount) * 100).toFixed(2) + "%";
+      return { name: displayName, value: amount, color, percent, src: icon };
+    });
+  };
+
+  // ===================== 페이지 타이틀 업데이트 =====================
   useEffect(() => {
     setTitle(getTitle(pageNum));
   }, [pageNum, userName]);
@@ -50,15 +88,12 @@ const ReportView = () => {
   useEffect(() => {
     const fetchReportData = async () => {
       try {
-        const res = await apiList.goaldashboard.getGoalDashboard(); // Dashboard API 호출
+        const res = await apiList.goalreport.getGoalReport(); // API 호출
         setReportData(res);
-
-        // month와 score 상태 업데이트
-        const currentMonth = res.goalAmount ? new Date().getMonth() + 1 : null;
-        setMonth(currentMonth);
+        setMonth(new Date().getMonth() + 1); // 현재 달로 세팅
       } catch (error) {
         console.error("월 데이터 불러오기 실패:", error);
-        setMonth(new Date().getMonth() + 1);
+        setMonth(new Date().getMonth()); // 실패 시 이전 달
       }
     };
     fetchReportData();
@@ -77,30 +112,23 @@ const ReportView = () => {
 
   // ===================== 렌더링 페이지 =====================
   const renderPage = () => {
-    if (!reportData) return null;
+    if (!reportData) return null; // 데이터 없으면 렌더링 X
+
+    const categoriesList = convertToCategoriesList(reportData);
 
     if (pageNum === 1) {
-      return <FallingRockScoreView score={reportData.achievementScore+reportData.stabilityScore+reportData.ratioScore+reportData.continuityScore} />;
+      return <FallingRockScoreView score={reportData.goalScore} />;
     }
-
-    // ProgressDonet용 카테고리 데이터
-    const categoriesForDonut = Object.entries(reportData.topCategorySpending).map(([name, value]) => ({
-      name,
-      value,
-      color: "#FF8353", // 필요 시 카테고리별 색상 매핑
-      percent: `${Math.round((value / reportData.goalAmount) * 100)}%`,
-      src: img.foodIcon // 필요 시 아이콘 매핑
-    }));
 
     if (pageNum === 2) {
       return (
         <div className="w-full">
           <p className="text-[#4A4A4A] font-semibold">카테고리별 소비</p>
-          <ProgressDonet 
-            total={reportData.goalAmount*reportData.achievementRate} 
-            categories={categoriesForDonut} 
-            month={`${month ?? ""}월`} 
-            size={300} 
+          <ProgressDonet
+            total={reportData.actualSpending}
+            categories={categoriesList}
+            month={`${month ?? ""}월`}
+            size={300}
           />
         </div>
       );
@@ -108,9 +136,9 @@ const ReportView = () => {
 
     if (pageNum === 3) {
       return (
-        <ProgressCategoryView 
-          categoriesList={categoriesForDonut} 
-          totalPrice={reportData.goalAmount} 
+        <ProgressCategoryView
+          categoriesList={categoriesList}
+          totalPrice={reportData.actualSpending}
         />
       );
     }
