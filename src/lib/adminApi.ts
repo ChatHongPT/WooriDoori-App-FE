@@ -490,5 +490,104 @@ export const sendReportNotification = async (
   }
 };
 
+// 전체 사용자 커스텀 알림 전송 API
+export interface SendAllCustomNotificationRequest {
+  message: string;
+}
+
+export const sendAllCustomNotification = async (
+  request: SendAllCustomNotificationRequest
+): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const response = await apiClient.post<ApiResponse<{}>>('/admin/send/allcustom', request);
+
+    if (response.data.statusCode === 200) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        error: response.data.resultMsg || '전체 커스텀 알림 전송에 실패했습니다.',
+      };
+    }
+  } catch (error: any) {
+    console.error('전체 커스텀 알림 전송 에러:', error);
+    
+    const errorMessage =
+      error?.response?.data?.errorResultMsg ||
+      error?.response?.data?.resultMsg ||
+      error?.message ||
+      '전체 커스텀 알림 전송에 실패했습니다.';
+    
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+};
+
+// 전체 사용자 일기 알림 전송 API
+export const sendAllDiaryNotification = async (): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const response = await apiClient.post<ApiResponse<{}>>('/admin/send/alldiary');
+
+    if (response.data.statusCode === 200) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        error: response.data.resultMsg || '전체 일기 알림 전송에 실패했습니다.',
+      };
+    }
+  } catch (error: any) {
+    console.error('전체 일기 알림 전송 에러:', error);
+    
+    const errorMessage =
+      error?.response?.data?.errorResultMsg ||
+      error?.response?.data?.resultMsg ||
+      error?.message ||
+      '전체 일기 알림 전송에 실패했습니다.';
+    
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+};
+
+// 전체 사용자 리포트 알림 전송 API
+export const sendAllReportNotification = async (): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const response = await apiClient.post<ApiResponse<{}>>('/admin/send/allreport');
+
+    if (response.data.statusCode === 200) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        error: response.data.resultMsg || '전체 리포트 알림 전송에 실패했습니다.',
+      };
+    }
+  } catch (error: any) {
+    console.error('전체 리포트 알림 전송 에러:', error);
+    
+    const errorMessage =
+      error?.response?.data?.errorResultMsg ||
+      error?.response?.data?.resultMsg ||
+      error?.message ||
+      '전체 리포트 알림 전송에 실패했습니다.';
+    
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+};
+
 export default apiClient;
 

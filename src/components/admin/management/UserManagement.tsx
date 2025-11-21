@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAdminHeader } from '@/context/AdminHeaderContext'
-import { getUserList, ApiUser, updateMemberAuthority, getMemberByName, sendCustomNotification, sendDiaryNotification, sendReportNotification } from '@/lib/adminApi'
+import { getUserList, ApiUser, updateMemberAuthority, getMemberByName, sendCustomNotification, sendDiaryNotification, sendReportNotification, sendAllCustomNotification, sendAllDiaryNotification, sendAllReportNotification } from '@/lib/adminApi'
 import * as XLSX from 'xlsx'
 import { Button } from '@/components/admin/ui/button'
 import { Checkbox } from '@/components/admin/ui/checkbox'
@@ -96,6 +96,12 @@ export function UserManagement() {
   const [customMessage, setCustomMessage] = useState('')
   const [isSendingNotification, setIsSendingNotification] = useState(false)
 
+  // 전체 알림 전송 상태
+  const [isAllNotificationDialogOpen, setIsAllNotificationDialogOpen] = useState(false)
+  const [allNotificationType, setAllNotificationType] = useState<'custom' | 'diary' | 'report'>('custom')
+  const [allCustomMessage, setAllCustomMessage] = useState('')
+  const [isSendingAllNotification, setIsSendingAllNotification] = useState(false)
+
   const handleSort = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
   }
@@ -154,10 +160,10 @@ export function UserManagement() {
         }
       } else {
         // 권한 변경이 아닌 경우 로컬 상태만 업데이트
-        setUsers(users.map(user => 
-          user.id === editingUser.id 
-            ? { ...user, ...editForm } 
-            : user
+      setUsers(users.map(user => 
+        user.id === editingUser.id 
+          ? { ...user, ...editForm } 
+          : user
         ));
         setIsEditDialogOpen(false);
         setEditingUser(null);
@@ -297,6 +303,51 @@ export function UserManagement() {
     }
   }
 
+  // 전체 알림 전송 핸들러
+  const handleSendAllNotification = () => {
+    setAllNotificationType('custom')
+    setAllCustomMessage('')
+    setIsAllNotificationDialogOpen(true)
+    setError(null)
+  }
+
+  const handleAllNotificationSend = async () => {
+    // 커스텀 알림의 경우 메시지 검증
+    if (allNotificationType === 'custom' && !allCustomMessage.trim()) {
+      setError('알림 메시지를 입력해주세요.')
+      return
+    }
+
+    try {
+      setIsSendingAllNotification(true)
+      setError(null)
+
+      let result
+      if (allNotificationType === 'custom') {
+        result = await sendAllCustomNotification({
+          message: allCustomMessage,
+        })
+      } else if (allNotificationType === 'diary') {
+        result = await sendAllDiaryNotification()
+      } else {
+        result = await sendAllReportNotification()
+      }
+
+      if (result.success) {
+        setIsAllNotificationDialogOpen(false)
+        setAllCustomMessage('')
+        alert('전체 알림이 전송되었습니다.')
+      } else {
+        setError(result.error || '전체 알림 전송에 실패했습니다.')
+      }
+    } catch (err: any) {
+      console.error('전체 알림 전송 에러:', err)
+      setError('전체 알림 전송 중 오류가 발생했습니다.')
+    } finally {
+      setIsSendingAllNotification(false)
+    }
+  }
+
   const handleExport = () => {
     // 선택된 항목이 있으면 선택된 항목만, 없으면 전체 데이터
     const dataToExport = selectedUsers.length > 0
@@ -363,7 +414,7 @@ export function UserManagement() {
             })
             console.log('변환된 사용자 수:', convertedUsers.length)
             console.log('변환된 사용자:', convertedUsers)
-            setUsers(convertedUsers)
+        setUsers(convertedUsers)
           } catch (err) {
             console.error('사용자 변환 중 에러:', err)
             setError('사용자 데이터 변환 중 오류가 발생했습니다.')
@@ -426,10 +477,10 @@ export function UserManagement() {
       {error && (
         <div className="p-4 mb-4 rounded-lg border bg-red-900/20 border-red-500/50">
           <p className="text-sm text-red-400">{error}</p>
-        </div>
+            </div>
       )}
       
-      {/* 검색창 */}
+      {/* 검색창 및 전체 알림 버튼 */}
       <div className="mb-6 p-4 bg-[#0a0a0a] rounded-lg border border-[#1a1a1a]">
         <div className="flex gap-3 items-end">
           <div className="flex-1">
@@ -449,7 +500,7 @@ export function UserManagement() {
               }}
               className="bg-[#1a1a1a] border-[#2a2a2a] text-white h-12 text-base placeholder:text-gray-500"
             />
-          </div>
+            </div>
           <Button
             onClick={handleSearch}
             disabled={isSearching || !searchMemberId.trim()}
@@ -466,8 +517,17 @@ export function UserManagement() {
               초기화
             </Button>
           )}
-        </div>
-      </div>
+          <Button
+            onClick={handleSendAllNotification}
+            className="px-6 h-12 text-white bg-green-600 hover:bg-green-700"
+          >
+            <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            전체 알림
+          </Button>
+            </div>
+          </div>
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="bg-white dark:bg-[#0a0a0a] border-gray-200 dark:border-[#1a1a1a] text-gray-900 dark:text-white">
           <DialogHeader>
@@ -718,14 +778,14 @@ export function UserManagement() {
               </div>
             )}
             {notificationType === 'diary' && (
-              <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+              <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800">
                 <p className="text-sm text-blue-800 dark:text-blue-300">
                   일기 작성 알림을 전송합니다.
                 </p>
               </div>
             )}
             {notificationType === 'report' && (
-              <div className="p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+              <div className="p-3 bg-green-50 rounded-lg border border-green-200 dark:bg-green-900/20 dark:border-green-800">
                 <p className="text-sm text-green-800 dark:text-green-300">
                   리포트 알림을 전송합니다.
                 </p>
@@ -752,6 +812,88 @@ export function UserManagement() {
               disabled={isSendingNotification}
             >
               {isSendingNotification ? '전송 중...' : '전송'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* 전체 알림 전송 다이얼로그 */}
+      <Dialog open={isAllNotificationDialogOpen} onOpenChange={setIsAllNotificationDialogOpen}>
+        <DialogContent className="bg-white dark:bg-[#0a0a0a] border-gray-200 dark:border-[#1a1a1a] text-gray-900 dark:text-white">
+          <DialogHeader>
+            <DialogTitle className="text-gray-900 dark:text-white">전체 알림 전송</DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-gray-400">
+              모든 사용자에게 알림을 전송합니다.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="all_notification_type" className="text-gray-700 dark:text-gray-300">알림 유형</Label>
+              <Select
+                value={allNotificationType}
+                onValueChange={(value: 'custom' | 'diary' | 'report') => {
+                  setAllNotificationType(value)
+                  if (value !== 'custom') {
+                    setAllCustomMessage('')
+                  }
+                }}
+              >
+                <SelectTrigger className="bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-[#2a2a2a] text-gray-900 dark:text-white">
+                  <SelectValue placeholder="알림 유형 선택" />
+                </SelectTrigger>
+                <SelectContent className="bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-[#2a2a2a] text-gray-900 dark:text-white">
+                  <SelectItem value="custom">커스텀 알림</SelectItem>
+                  <SelectItem value="diary">일기 알림</SelectItem>
+                  <SelectItem value="report">리포트 알림</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {allNotificationType === 'custom' && (
+              <div className="grid gap-2">
+                <Label htmlFor="all_custom_message" className="text-gray-700 dark:text-gray-300">알림 메시지 *</Label>
+                <Input
+                  id="all_custom_message"
+                  value={allCustomMessage}
+                  onChange={(e) => setAllCustomMessage(e.target.value)}
+                  placeholder="알림 메시지를 입력하세요"
+                  className="bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-[#2a2a2a] text-gray-900 dark:text-white"
+                />
+              </div>
+            )}
+            {allNotificationType === 'diary' && (
+              <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800">
+                <p className="text-sm text-blue-800 dark:text-blue-300">
+                  모든 사용자에게 일기 작성 알림을 전송합니다.
+                </p>
+              </div>
+            )}
+            {allNotificationType === 'report' && (
+              <div className="p-3 bg-green-50 rounded-lg border border-green-200 dark:bg-green-900/20 dark:border-green-800">
+                <p className="text-sm text-green-800 dark:text-green-300">
+                  모든 사용자에게 리포트 알림을 전송합니다.
+                </p>
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setIsAllNotificationDialogOpen(false)
+                setAllCustomMessage('')
+                setError(null)
+              }}
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              disabled={isSendingAllNotification}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={handleAllNotificationSend}
+              className="text-white bg-green-600 hover:bg-green-700"
+              disabled={isSendingAllNotification}
+            >
+              {isSendingAllNotification ? '전송 중...' : '전체 전송'}
             </Button>
           </DialogFooter>
         </DialogContent>
