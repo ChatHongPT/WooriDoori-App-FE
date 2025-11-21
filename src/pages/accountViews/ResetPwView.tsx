@@ -6,27 +6,46 @@ import DefaultDiv from "@/components/default/DefaultDiv";
 import InputBox from "@/components/input/InputBox";
 import Title1 from "@/components/title/Title1";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useApi } from "@/hooks/useApi";
+import { apiList } from "@/api/apiList";
 
 const ResetPwView = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const requestTemporaryPasswordApi = useApi(apiList.requestTemporaryPassword);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isFormValid = name.trim().length > 0 && emailRegex.test(id.trim());
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!emailRegex.test(id.trim())) {
       setErrorMsg("유효한 이메일 주소를 입력해주세요.");
       return;
     }
 
-    if (id !== "example@gmail.com") {
-      setErrorMsg("존재하지 않는 아이디입니다.");
+    if (!name.trim()) {
+      setErrorMsg("이름을 입력해주세요.");
       return;
     }
 
-    window.location.href = "/newpw";
+    setIsLoading(true);
+    setErrorMsg("");
+
+    // 임시 비밀번호 발급 API 호출
+    const result = await requestTemporaryPasswordApi.call(id.trim(), name.trim());
+    setIsLoading(false);
+
+    if (result?.success) {
+      // 성공 시 비밀번호 변경 페이지로 이동 (memberId를 URL 파라미터로 전달)
+      navigate(`/newpw?id=${encodeURIComponent(id.trim())}`);
+    } else {
+      setErrorMsg(result?.resultMsg || "임시 비밀번호 발급에 실패했습니다.");
+    }
   };
 
   return (
@@ -84,8 +103,8 @@ const ResetPwView = () => {
         {/* 확인 버튼 */}
         <BottomButtonWrapper>
             <DefaultButton 
-              text="확인"
-              disabled={!isFormValid}
+              text={isLoading ? "처리 중..." : "확인"}
+              disabled={!isFormValid || isLoading}
               onClick={handleConfirm} 
             />
         </BottomButtonWrapper>

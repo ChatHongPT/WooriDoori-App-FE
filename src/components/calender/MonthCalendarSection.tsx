@@ -45,7 +45,7 @@ const MonthCalendarSection: React.FC<MonthCalendarSectionProps> = ({
       </div>
 
       {/* 캘린더 */}
-      <div ref={calendarStickyRef} className="bg-white pt-2 pb-5">
+      <div ref={calendarStickyRef} className="bg-white pt-2 rounded-bㅇ-2xl">
         {/* 요일 헤더 */}
         <div className="grid grid-cols-7 gap-1 mb-3">
           {['일', '월', '화', '수', '목', '금', '토'].map((day, idx) => (

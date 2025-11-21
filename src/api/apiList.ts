@@ -400,4 +400,67 @@ chat: async (message: string) => {
     };
   }
 },
+
+  // 비밀번호 변경 (임시 비밀번호로 로그인 후 새 비밀번호로 변경)
+  changePassword: async (memberId: string, oldPassword: string, newPassword: string) => {
+    try {
+      const response = await axiosInstance.patch("/auth/resetPw", {
+        id: memberId,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      });
+      return {
+        success: true,
+        data: response.data.resultData,
+        resultMsg: response.data.resultMsg,
+      };
+    } catch (err: any) {
+      console.error("비밀번호 변경 에러:", err);
+      const errorName = err?.response?.data?.errorName;
+      const errorResultMsg = err?.response?.data?.errorResultMsg;
+      
+      let errorMessage = errorResultMsg;
+      if (errorName && ERROR_RESPONSE[errorName]) {
+        errorMessage = ERROR_RESPONSE[errorName].message;
+      }
+      
+      return {
+        success: false,
+        resultMsg: errorMessage || err?.response?.data?.resultMsg || err?.message || "비밀번호 변경에 실패했습니다.",
+        resultCode: err?.response?.data?.statusCode,
+        errorName: errorName,
+      };
+    }
+  },
+
+  // 임시 비밀번호 발급 요청
+  requestTemporaryPassword: async (memberId: string, memberName: string) => {
+    try {
+      const response = await axiosInstance.patch("/auth/genPw", {
+        id: memberId,
+        name: memberName,
+      });
+      return {
+        success: true,
+        data: response.data.resultData,
+        resultMsg: response.data.resultMsg,
+      };
+    } catch (err: any) {
+      console.error("임시 비밀번호 발급 에러:", err);
+      const errorName = err?.response?.data?.errorName;
+      const errorResultMsg = err?.response?.data?.errorResultMsg;
+      
+      let errorMessage = errorResultMsg;
+      if (errorName && ERROR_RESPONSE[errorName]) {
+        errorMessage = ERROR_RESPONSE[errorName].message;
+      }
+      
+      return {
+        success: false,
+        resultMsg: errorMessage || err?.response?.data?.resultMsg || err?.message || "임시 비밀번호 발급에 실패했습니다.",
+        resultCode: err?.response?.data?.statusCode,
+        errorName: errorName,
+      };
+    }
+  },
 };
