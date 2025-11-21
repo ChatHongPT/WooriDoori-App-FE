@@ -327,13 +327,62 @@ goal: {
         })
   },
 
-
   goaldetail: {
-  // year, month를 받아서 해당 월의 상세 정보 조회
-  getGoalDetail: (year: number, month: number) =>
-    axiosInstance
-      .get(`/goal/past?year=${year}&month=${month}`)
-      .then(res => res.data.resultData),
+    // year, month를 받아서 해당 월의 상세 정보 조회
+    getGoalDetail: (year: number, month: number) =>
+      axiosInstance
+        .get(`/goal/past?year=${year}&month=${month}`)
+        .then(res => res.data.resultData),
+  },
+
+// 카드 추천 API
+cardRecommend: async () => {
+  try {
+    console.log("🔵 getCardRecommend API 호출:", {
+      url: "/card/recommend",
+      method: "GET",
+    });
+
+    const response = await axiosInstance.get("/card/recommend");
+    
+    console.log("🟢 getCardRecommend API 성공 응답:", {
+      statusCode: response.data.statusCode,
+      resultMsg: response.data.resultMsg,
+      resultData: response.data.resultData,
+    });
+
+    return {
+      success: true,
+      data: response.data.resultData,
+      resultMsg: response.data.resultMsg,
+    };
+  } catch (err: any) {
+    console.error("🔴 카드 추천 조회 에러:", {
+      message: err?.message,
+      status: err?.response?.status,
+      statusText: err?.response?.statusText,
+      data: err?.response?.data,
+      config: {
+        url: err?.config?.url,
+        method: err?.config?.method,
+      },
+    });
+    
+    const errorName = err?.response?.data?.errorName;
+    const errorResultMsg = err?.response?.data?.errorResultMsg;
+    
+    let errorMessage = errorResultMsg;
+    if (errorName && ERROR_RESPONSE[errorName]) {
+      errorMessage = ERROR_RESPONSE[errorName].message;
+    }
+    
+    return {
+      success: false,
+      resultMsg: errorMessage || err?.response?.data?.resultMsg || err?.message || "카드 추천 조회에 실패했습니다.",
+      resultCode: err?.response?.data?.statusCode,
+      errorName: errorName,
+    };
+  }
 },
 
 // 채팅 API
@@ -473,7 +522,7 @@ chat: async (message: string) => {
 
       return {
         success: true,
-        data: response.data.resultData,
+        data: response.data.resultData || [],
         resultMsg: response.data.resultMsg,
       };
     } catch (err: any) {
