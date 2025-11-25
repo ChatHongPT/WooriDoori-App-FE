@@ -16,11 +16,6 @@ function App() {
 
   // Amplitude 초기화
   useEffect(() => {
-    // 로컬호스트에서는 초기화하지 않음
-    if (window.location.href.includes('localhost')) {
-      return;
-    }
-
     const apiKey = import.meta.env.VITE_AMPLITUDE_API_KEY || 'f176d0f2dfbc332b7bc1515426bc31b5';
     
     // 세션 리플레이 플러그인 추가
