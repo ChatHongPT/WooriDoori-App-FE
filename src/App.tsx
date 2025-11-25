@@ -21,7 +21,7 @@ function App() {
       return;
     }
 
-    const apiKey = import.meta.env.VITE_AMPLITUDE_API_KEY || '17e05f26d143e7d8c1553714212c9f10';
+    const apiKey = import.meta.env.VITE_AMPLITUDE_API_KEY || 'f176d0f2dfbc332b7bc1515426bc31b5';
     
     // 세션 리플레이 플러그인 추가
     amplitude.add(sessionReplayPlugin());
