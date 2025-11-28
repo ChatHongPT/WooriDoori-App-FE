@@ -122,7 +122,7 @@ const buildBubbleList = (data: franchiseResponse[]) => {
 
 
   return (
-    <DefaultDiv isPadding={false} isHeader={true} title={`${categoryLabel} 중 가맹점 TOP ${franchiseDataList.length}`} onClose={()=>{window.history.back()}}>
+    <DefaultDiv isPadding={false} isHeader={true} title={`${categoryLabel} 중 가맹점 ${franchiseDataList.length != 0 ? `TOP ${franchiseDataList.length}` : ''}`} onClose={()=>{window.history.back()}}>
       {isLoading && (
         <div className="fixed inset-0 bg-white/80 flex items-center justify-center z-50">
           <div className="bg-white rounded-full p-6 shadow-lg">
