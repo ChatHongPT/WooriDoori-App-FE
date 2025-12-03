@@ -101,15 +101,15 @@ export default function AchievementDetailView() {
     const handleNavigateMonth = (direction: "prev" | "next") => {
     if (!historyList || currentIndex === -1) return;
 
-    // HistoryList가 일반적으로 최신순(Index 0)으로 정렬되었다고 가정
+
     if (direction === "prev") {
-      // '이전 달' 버튼 (과거 기록으로 이동 -> 인덱스 증가)
-      if (currentIndex >= historyList.length - 1) {
+      // '이전 달' 버튼 (과거 기록으로 이동 -> 인덱스 감소)
+      if (currentIndex >= 0) {
         setCurrentIndex(currentIndex - 1);
       }
     } else {
-      // '다음 달' 버튼 (최신 기록으로 이동 -> 인덱스 감소)
-      if (currentIndex <= 0) {
+      // '다음 달' 버튼 (최신 기록으로 이동 -> 인덱스 증가)
+      if (currentIndex <= historyList.length - 1) {
         setCurrentIndex(currentIndex + 1);
       }
     }
